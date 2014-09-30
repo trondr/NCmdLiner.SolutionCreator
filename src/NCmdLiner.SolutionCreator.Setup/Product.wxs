@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define ProductName="NCmdLiner Solution Creator" ?>
+<?define ProductFeature="NCmdLiner Solution Creator" ?>
+<?define ProductProjectName="NCmdLiner.SolutionCreator" ?>
+<?define PackageDescription="NCmdLiner Solution Creator creates a new solution by resolving a selected default solution template or user defined solution template." ?>
+<?define ProductUpgradeCode="873E1B06-8D58-4E9B-AAE3-AB7808A405F6" ?>
+<?define PackageKeywords="NCmdliner Solution Creator Template" ?>
+<?define CompanyName="gihub-com-trondr" ?>
+<?define ProductExeBaseName="NCmdLiner.SolutionCreator" ?>
+<?define ProductLibraryBaseName="NCmdLiner.SolutionCreator.Library" ?>
+<?define ProductExeReleaseFolder="..\..\bin\release\NCmdLiner.SolutionCreator" ?>
+<?define ProductLibraryReleaseFolder="..\..\bin\release\NCmdLiner.SolutionCreator.Library" ?>
+<?define ProductHelpLink="https://github.com/trondr/NCmdLiner.SolutionCreator"?>
+<?define TargetFolderName="NCmdLiner Solution Creator"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+      Id="*"
+      UpgradeCode="$(var.ProductUpgradeCode)"
+      Name="$(var.ProductName)"
+      Language="!(loc.LanguageCode)"
+      Version="!(bind.FileVersion.ProductDll)"
+      Manufacturer="$(var.CompanyName)"
+      >
+
+    <Package 
+      Id="*" 
+      InstallerVersion="200"
+      InstallPrivileges="elevated"
+      InstallScope="perMachine"
+      Compressed="yes" 
+      Platform="x86"
+      Description="$(var.PackageDescription)"
+      Keywords="$(var.PackageKeywords)"
+      Languages="!(loc.LanguageCode)"
+      SummaryCodepage="1252"
+      Manufacturer="$(var.CompanyName)"
+      />
+
+    <Icon Id="Product_Icon" SourceFile="$(var.ProductExeReleaseFolder)\$(var.ProductExeBaseName).exe"/>
+    <Property Id="ARPPRODUCTICON"  Value="Product_Icon"/>
+    <Property Id="ARPHELPLINK" Value="$(var.ProductHelpLink)" />
+    <Property Id="ARPCOMMENTS">$(var.PackageDescription)</Property>
+    <Property Id="ARPCONTACT">$(var.CompanyName)</Property>
+    
+    <MajorUpgrade AllowDowngrades="no" AllowSameVersionUpgrades="no"  DowngradeErrorMessage="!(loc.NewerVersionIsInstalled)" />
+
+    <Media Id="1" Cabinet="$(var.ProductProjectName)" EmbedCab="yes" CompressionLevel="high"/>
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="CompanyFolder" Name="$(var.CompanyName)">
+          <Directory Id="TargetBaseFolder" Name="$(var.TargetFolderName)">
+            <Directory Id="TargetFolder" Name="!(bind.FileVersion.ProductDll)" ></Directory>
+          </Directory>
+        </Directory>
+      </Directory>      
+    </Directory>
+    
+    <Feature Id="ProductFeature" Title="$(var.ProductFeature)" Level="1">
+      <ComponentGroupRef Id="ProductComponents_WiXComponentGroup" />
+      <!--<ComponentGroupRef Id="Components_WiXComponentGroup" />-->
+    </Feature>
+  </Product>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents_WiXComponentGroup" Directory="TargetFolder">			
+			 <Component Id="ProductExe_WiXComponent" Guid="*">
+         <CreateFolder/>
+         
+         <RemoveFolder Id="TargetFolder_WixRemoveFolder" On="uninstall" Directory="TargetFolder"/>
+         <RemoveFolder Id="TargetBaseFolder_WixRemoveFolder" On="uninstall" Directory="TargetBaseFolder"/>
+         <RemoveFolder Id="CompanyFolder_WixRemoveFolder" On="uninstall" Directory="CompanyFolder"/>
+         <RemoveFile Id="TargetFolderFiles_WixRemoveFile" Name="*.*" On="uninstall" Directory="TargetFolder" />
+
+         <File Id="ProductExe" Name="$(var.ProductExeBaseName).exe" Source="$(var.ProductExeReleaseFolder)\$(var.ProductExeBaseName).exe" KeyPath="yes" />
+         <File Id="ProductExePdb" Name="$(var.ProductExeBaseName).pdb" Source="$(var.ProductExeReleaseFolder)\$(var.ProductExeBaseName).pdb" KeyPath="no"/>
+         <File Id="ProductExeConfig" Name="$(var.ProductExeBaseName).exe.config" Source="$(var.ProductExeReleaseFolder)\$(var.ProductExeBaseName).exe.config" KeyPath="no" />
+
+         <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\$(var.ProductExeBaseName).exe" />
+         <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\$(var.ProductExeBaseName).exe" Value="[#ProductExe]" Type="string" Action="write" />
+         <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\$(var.ProductExeBaseName).exe" Name="path" Value="[TargetFolder]" Type="string" Action="write" />
+       </Component>
+
+        <Component Id="ProductLibraryDll_WixComponent" Guid="*">
+          <CreateFolder/>
+          <File Id="ProductDll" Name="$(var.ProductLibraryBaseName).dll" Source="$(var.ProductLibraryReleaseFolder)\$(var.ProductLibraryBaseName).dll" KeyPath="yes" />
+          <File Id="ProductDllPdb" Name="$(var.ProductLibraryBaseName).pdb" Source="$(var.ProductLibraryReleaseFolder)\$(var.ProductLibraryBaseName).pdb" KeyPath="no"/>
+        </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
