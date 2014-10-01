@@ -60,7 +60,7 @@
     
     <Feature Id="ProductFeature" Title="$(var.ProductFeature)" Level="1">
       <ComponentGroupRef Id="ProductComponents_WiXComponentGroup" />
-      <!--<ComponentGroupRef Id="Components_WiXComponentGroup" />-->
+      <ComponentGroupRef Id="Components_WiXComponentGroup" />
     </Feature>
   </Product>
 

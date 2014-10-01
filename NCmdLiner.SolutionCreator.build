@@ -3,7 +3,7 @@
 
   <!--Set product properties and paths-->
   
-  <PropertyGroup>
+  <PropertyGroup>    
     <ProductName>NCmdLiner.SolutionCreator</ProductName>
     <ProductCompany>github.com/trondr</ProductCompany>
     <ProductDescription>NCmdLiner.SolutionCreator creates a new solution by resolving a selected default or user defined template solution.</ProductDescription>
@@ -45,7 +45,7 @@
   <!-- Verify that NUnit is available-->
   
   <Choose>
-    <When Condition="Exists('$(ToolsDirectory)\NUnit\bin\nunit.exe')">
+    <When Condition="Exists('$(ToolsDirectory)\NUnit\nunit.exe')">
       <PropertyGroup>
         <NUnitIsAvailable>true</NUnitIsAvailable>
       </PropertyGroup>

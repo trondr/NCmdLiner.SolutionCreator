@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="TargetFolder">
+      <Component Id="id_NCmdLiner_dll_2075067574_WixComponent" Guid="57E3A25F-240E-459F-8B78-325432C0B53D" DiskId="1">
+        <CreateFolder />
+        <RemoveFolder Id="id_Libs_1792346492_WixRemoveFolder" On="uninstall" />
+        <RemoveFile Id="id_Libs_1292308201_WixRemoveFile" Name="*.*" On="uninstall" />
+        <File Id="id_NCmdLiner_dll_225620143_WixFile" Name="NCmdLiner.dll" KeyPath="yes" Source="C:\MyData\Dev\NCmdLiner.SolutionCreator\bin\Release\NCmdLiner.SolutionCreator\Libs\NCmdLiner.dll" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Components_WiXComponentGroup">
+      <ComponentRef Id="id_NCmdLiner_dll_2075067574_WixComponent" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>
