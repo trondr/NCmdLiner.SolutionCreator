@@ -21,8 +21,10 @@
     <SrcDirectory>$(MSBuildProjectDirectory)\src</SrcDirectory>
     <ToolsDirectory>$(MSBuildProjectDirectory)\tools</ToolsDirectory>
   
+    <NunitVersion>2.6.3</NunitVersion>
+    
   </PropertyGroup>
-
+  
   <!--
 		Include MSBuild Community Tasks.
 	-->
@@ -40,6 +42,21 @@
   </Choose>
   <Import Project="$(ToolsDirectory)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition=" '$(MSBuildCommunityTasksAvailable)' == 'true' "/>
 
+  <!-- Verify that NUnit is available-->
+  
+  <Choose>
+    <When Condition="Exists('$(ToolsDirectory)\NUnit\bin\nunit.exe')">
+      <PropertyGroup>
+        <NUnitIsAvailable>true</NUnitIsAvailable>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <NUnitIsAvailable>false</NUnitIsAvailable>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+ 
   <ItemGroup>
     <DefaultExclude Include="$(SrcDirectory)\**\.hg\**" />
     <DefaultExclude Include="$(SrcDirectory)\**\.git\**" />
@@ -101,8 +118,8 @@
 	  />
   </Target>
 
-  <!--Compile class library for all defined NetFrameWorkNames-->
-
+  <!--Compile-->
+  
   <Target Name="Compile" DependsOnTargets="Version" >
     <MSBuild Projects="$(SrcDirectory)\$(ProductName).Library\$(ProductName).Library.csproj" Properties="Configuration=Release;" />
     <MSBuild Projects="$(SrcDirectory)\$(ProductName)\$(ProductName).csproj" Properties="Configuration=Release;" />
@@ -112,9 +129,26 @@
     <MSBuild Projects="$(SrcDirectory)\$(ProductName).Library.Tests\$(ProductName).Library.Tests.csproj" Properties="Configuration=Release"/>
   </Target>
 
-  <!-- Run Unit tests -->
+  <!--Prepare for test-->
+  
+  <Target Name="DownloadNunit" Condition=" '$(NUnitIsAvailable)' == 'false' ">
+    <Message Text="Downloading NUnit..." Importance="normal" />
+    <WebDownload FileUri="http://launchpad.net/nunitv2/trunk/2.6.3/+download/NUnit-$(NunitVersion).zip" FileName="$(BinDirectory)\Download\NUnit-$(NunitVersion).zip" />
+    <Message Text="Extracting NUnit..." Importance="normal" />
+    <Unzip ZipFileName="$(BinDirectory)\Download\NUnit-$(NunitVersion).zip" TargetDirectory="$(BinDirectory)\Download"/>
+    <ItemGroup>
+      <NUnitFiles Include="$(BinDirectory)\Download\NUnit-$(NunitVersion)\bin\**\**"/>
+    </ItemGroup>
+    <Message Text="Copying NUnit to tools folder..." Importance="normal" />
+    <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(ToolsDirectory)\NUnit\%(RecursiveDir)"/>
+    <Copy SourceFiles="$(BinDirectory)\Download\NUnit-$(NunitVersion)\license.txt" DestinationFiles="$(ToolsDirectory)\NUnit\license.txt"/>
+    <Delete Files="$(BinDirectory)\Download\NUnit-$(NunitVersion).zip"/>
+    <DeleteTree Directories="$(BinDirectory)\Download\NUnit-$(NunitVersion)"/>        
+  </Target>
 
-  <Target Name="Tests" DependsOnTargets="CompileTests">
+  <!-- Run Unit tests -->
+  
+  <Target Name="Tests" DependsOnTargets="CompileTests;DownloadNunit">
     <CreateItem Include="$(BinDirectory)\Release\$(ProductName).Library.Tests\$(ProductName).Library.Tests.dll">
       <Output TaskParameter="Include" ItemName="TestAssembly" />
     </CreateItem>
