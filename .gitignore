@@ -40,3 +40,4 @@ _ReSharper*/
 *.shfbproj_*
 Doc\Help
 .metadata/*
+tools/NMultiTool/(null)
