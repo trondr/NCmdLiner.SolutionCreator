@@ -8,6 +8,7 @@ using Castle.Windsor;
 using Common.Logging;
 using NCmdLiner.SolutionCreator.Library.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common;
+using NCmdLiner.SolutionCreator.Library.Views;
 
 namespace NCmdLiner.SolutionCreator.BootStrap
 {
@@ -31,6 +32,8 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Kernel.Resolver.AddSubResolver(new LoggerSubDependencyResolver()); //Enable injection of class specific loggers
 
             //Manual registrations
+
+            container.Register(Component.For<MainWindow>().Activator<StrictComponentActivator>());
 
             //Factory registrations example:
 

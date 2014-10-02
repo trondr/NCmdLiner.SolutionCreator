@@ -2,15 +2,18 @@
 using Common.Logging;
 using NCmdLiner.Attributes;
 using NCmdLiner.SolutionCreator.Library.Common;
+using NCmdLiner.SolutionCreator.Library.Views;
 
 namespace NCmdLiner.SolutionCreator.Commands
 {
     public class CreateSolutionCommand: CommandsBase
     {
+        private readonly MainWindow _mainWindow;
         private readonly ILog _logger;
 
-        public CreateSolutionCommand(ILog logger)
+        public CreateSolutionCommand(MainWindow mainWindow,ILog logger)
         {
+            _mainWindow = mainWindow;
             _logger = logger;
         }
 
@@ -23,6 +26,8 @@ namespace NCmdLiner.SolutionCreator.Commands
             var returnValue = 0;
             _logger.Info("Start CreateSolution...");
             MessageBox.Show("Dummy create solution dialog.");
+            var application = new System.Windows.Application();
+            application.Run(_mainWindow);
             _logger.Info("End CreateSolution.");
             return returnValue;
         }

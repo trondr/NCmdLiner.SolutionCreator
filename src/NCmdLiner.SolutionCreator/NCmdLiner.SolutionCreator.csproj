@@ -65,19 +65,24 @@
     <Reference Include="NCmdLiner">
       <HintPath>..\..\tools\NuGetPackages\NCmdLiner.1.0.13304.114\lib\net45\NCmdLiner.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapper.cs" />
+    <Compile Include="BootStrap\StrictComponentActivator.cs" />
     <Compile Include="BootStrap\ContainerInstaller.cs" />
     <Compile Include="BootStrap\CustomTypeFactoryComponentSelector.cs" />
     <Compile Include="BootStrap\LoggerSubDependencyResolver.cs" />

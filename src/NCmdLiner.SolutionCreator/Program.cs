@@ -8,6 +8,7 @@ namespace NCmdLiner.SolutionCreator
 {
     class Program
     {
+        [STAThread]
         static int Main(string[] args)
         {
             var returnValue = 0;
