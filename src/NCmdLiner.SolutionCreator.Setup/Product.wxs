@@ -6,7 +6,7 @@
 <?define PackageDescription="NCmdLiner Solution Creator creates a new solution by resolving a selected default solution template or user defined solution template." ?>
 <?define ProductUpgradeCode="873E1B06-8D58-4E9B-AAE3-AB7808A405F6" ?>
 <?define PackageKeywords="NCmdliner Solution Creator Template" ?>
-<?define CompanyName="gihub-com-trondr" ?>
+<?define CompanyName="github-com-trondr" ?>
 <?define ProductExeBaseName="NCmdLiner.SolutionCreator" ?>
 <?define ProductLibraryBaseName="NCmdLiner.SolutionCreator.Library" ?>
 <?define ProductExeReleaseFolder="..\..\bin\release\NCmdLiner.SolutionCreator" ?>
@@ -35,7 +35,7 @@
       Keywords="$(var.PackageKeywords)"
       Languages="!(loc.LanguageCode)"
       SummaryCodepage="1252"
-      Manufacturer="$(var.CompanyName)"
+      Manufacturer="$(var.CompanyName)"      
       />
 
     <Icon Id="Product_Icon" SourceFile="$(var.ProductExeReleaseFolder)\$(var.ProductExeBaseName).exe"/>
@@ -43,8 +43,26 @@
     <Property Id="ARPHELPLINK" Value="$(var.ProductHelpLink)" />
     <Property Id="ARPCOMMENTS">$(var.PackageDescription)</Property>
     <Property Id="ARPCONTACT">$(var.CompanyName)</Property>
+
+    <PropertyRef Id ="NETFRAMEWORK45"/>
     
-    <MajorUpgrade AllowDowngrades="no" AllowSameVersionUpgrades="no"  DowngradeErrorMessage="!(loc.NewerVersionIsInstalled)" />
+    <Condition Message="!(loc.DotNetFrameWorkConditionMessage)">Installed OR NETFRAMEWORK45</Condition>
+
+    <Upgrade Id="$(var.ProductUpgradeCode)">
+      <UpgradeVersion Property="SELFFOUND" OnlyDetect="yes"  Minimum="!(bind.FileVersion.ProductDll)" IncludeMinimum='yes'  Maximum="!(bind.FileVersion.ProductDll)" IncludeMaximum='yes' />
+      <UpgradeVersion Property="NEWERFOUND" OnlyDetect="yes" Minimum="!(bind.FileVersion.ProductDll)" IncludeMinimum="no" />
+      <UpgradeVersion Property="OLDERFOUND" OnlyDetect="no"  Minimum="1.0.0.0" IncludeMinimum="yes" Maximum="!(bind.FileVersion.ProductDll)" IncludeMaximum="no" />
+    </Upgrade>
+
+    <CustomAction Id="NoDowngrade" Error="A later version of $(var.ProductName) is already installed." />
+    <CustomAction Id="NoSelf" Error="Same version of $(var.ProductName) is already installed." />
+
+    <InstallExecuteSequence>
+      <Custom Action="NoDowngrade" After="FindRelatedProducts"><![CDATA[NEWERFOUND]]></Custom>
+      <Custom Action="NoSelf" After="FindRelatedProducts"><![CDATA[SELFFOUND]]></Custom>
+      <RemoveExistingProducts After="InstallInitialize"/>
+      <LaunchConditions After="AppSearch"/>
+    </InstallExecuteSequence>
 
     <Media Id="1" Cabinet="$(var.ProductProjectName)" EmbedCab="yes" CompressionLevel="high"/>
     
@@ -62,6 +80,12 @@
       <ComponentGroupRef Id="ProductComponents_WiXComponentGroup" />
       <ComponentGroupRef Id="Components_WiXComponentGroup" />
     </Feature>
+
+    <WixVariable Id="WixUIBannerBmp" Value="WixUIBanner.bmp"/>
+    <WixVariable Id="WixUIDialogBmp" Value="WiXUiDialog.bmp"/>
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf"/>
+    <UIRef Id="WixUI_Mondo"/>
+    
   </Product>
 
 	<Fragment>
