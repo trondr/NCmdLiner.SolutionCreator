@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("NCmdLiner.SolutionCreator.Library")]
 [assembly: AssemblyCopyright("Copyright © <github.com/trondr> 2014")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyInformationalVersion("1.0.14274.f2d2bc4")]
-[assembly: AssemblyVersion("1.0.14274.6")]
-[assembly: AssemblyFileVersion("1.0.14274.6")]
+[assembly: AssemblyInformationalVersion("1.0.14275.41ee79d")]
+[assembly: AssemblyVersion("1.0.14275.9")]
+[assembly: AssemblyFileVersion("1.0.14275.9")]
 
 

@@ -56,10 +56,16 @@
 
     <CustomAction Id="NoDowngrade" Error="A later version of $(var.ProductName) is already installed." />
     <CustomAction Id="NoSelf" Error="Same version of $(var.ProductName) is already installed." />
+    <CustomAction Id="Install_Assemblies_CustomAction"             Directory="TargetFolder" Return="check" Execute="deferred" Impersonate="no" ExeCommand="&quot;[TargetFolder]\NMultiTool\NMultiTool.exe&quot; InstallUtil /installAction=Install /directory=&quot;[TargetFolder].&quot; /includeFileSpecs=&quot;{'NCmdLiner.SolutionCreator.exe'}&quot; /excludeFileSpecs=&quot;{'excludeNothing'}&quot;" />
+    <CustomAction Id="Install_Assemblies_AfterCommit_CustomAction" Directory="TargetFolder" Return="check" Execute="commit"   Impersonate="no" ExeCommand="&quot;[TargetFolder]\NMultiTool\NMultiTool.exe&quot; InstallUtil /installAction=Install /directory=&quot;[TargetFolder].&quot; /includeFileSpecs=&quot;{'NCmdLiner.SolutionCreator.exe'}&quot; /excludeFileSpecs=&quot;{'excludeNothing'}&quot;" />
+    <CustomAction Id="UnInstall_Assemblies_CustomAction"           Directory="TargetFolder" Return="check" Execute="deferred" Impersonate="no" ExeCommand="&quot;[TargetFolder]\NMultiTool\NMultiTool.exe&quot; InstallUtil /installAction=UnInstall /directory=&quot;[TargetFolder].&quot; /includeFileSpecs=&quot;{'NCmdLiner.SolutionCreator.exe'}&quot; /excludeFileSpecs=&quot;{'excludeNothing'}&quot;" />
 
     <InstallExecuteSequence>
       <Custom Action="NoDowngrade" After="FindRelatedProducts"><![CDATA[NEWERFOUND]]></Custom>
       <Custom Action="NoSelf" After="FindRelatedProducts"><![CDATA[SELFFOUND]]></Custom>
+      <Custom Action="Install_Assemblies_CustomAction" After="InstallFiles">($ProductExe_WiXComponent&gt;2)</Custom>
+      <Custom Action="Install_Assemblies_AfterCommit_CustomAction" After="InstallFiles">($ProductExe_WiXComponent&gt;2)</Custom>
+      <Custom Action="UnInstall_Assemblies_CustomAction" After="UnpublishFeatures">($ProductExe_WiXComponent=2)</Custom>
       <RemoveExistingProducts After="InstallInitialize"/>
       <LaunchConditions After="AppSearch"/>
     </InstallExecuteSequence>
