@@ -20,5 +20,15 @@ namespace NCmdLiner.SolutionCreator.Library.Tests
                 return sw.ReadToEnd();
             }
         }
+
+        public static void CreateFolder(string folderName)
+        {
+            Directory.CreateDirectory(folderName);
+        }
+
+        public static void DeleteFolder(string folderName)
+        {
+            Directory.Delete(folderName, true);
+        }
     }
 }

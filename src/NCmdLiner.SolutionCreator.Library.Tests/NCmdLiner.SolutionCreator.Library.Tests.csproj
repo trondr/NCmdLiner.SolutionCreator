@@ -53,6 +53,7 @@
     <Compile Include="TestData.cs" />
     <Compile Include="UnitTests\ContextTests.cs" />
     <Compile Include="UnitTests\FileEncodingTests.cs" />
+    <Compile Include="UnitTests\ResolveDirectoryTests.cs" />
     <Compile Include="UnitTests\ResolveFileTests.cs" />
     <Compile Include="UnitTests\ResolveTextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

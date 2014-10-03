@@ -19,7 +19,8 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         private FileEncoding _fileEncoding;
         private TextResolver _textResolver;
         private string _targetTestFile;
-        private IFileDataComparer _fileComparer;
+        private IFileComparer _fileComparer;
+        private FileCopy _fileCopy;
 
         [SetUp]
         public void SetUp()
@@ -33,9 +34,16 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _textResolver = new TextResolver(_stubContext, _logger);
             _sourceTestFile = Path.GetTempFileName();
             _targetTestFile = Path.GetTempFileName();
-            _fileComparer = new FileDataComparer();
-
-
+            if (File.Exists(_sourceTestFile))
+            {
+                File.Delete(_sourceTestFile);
+            }
+            if (File.Exists(_targetTestFile))
+            {
+                File.Delete(_targetTestFile);
+            }
+            _fileComparer = new FileComparer(new FileTimeComparer(_logger), _logger);
+            _fileCopy = new FileCopy();
         }
 
         [TearDown]
@@ -57,7 +65,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             var text = string.Format("The name of my console project is '_S_ConsoleProjectName_S_',{0}and the name of the corresponding library project is '_S_LibraryProjectName_S_'.{0}This is an _S_ProjectDescription_S_", Environment.NewLine);
             TestData.CreateTestTextFile(_sourceTestFile,Encoding.UTF8, text);
             var expected = string.Format("The name of my console project is 'My.Football.Manager',{0}and the name of the corresponding library project is 'My.Football.Manager.Library'.{0}This is an application for management of football teams.", Environment.NewLine);
-            var target = new FileResolver(_fileEncoding,_textResolver, _logger);
+            var target = new FileResolver(_fileEncoding, _textResolver, _fileCopy, _logger);
             target.Resolve(_sourceTestFile,_targetTestFile);
             var actual = TestData.ReadTestTextFile(_targetTestFile,Encoding.UTF8);
             Assert.AreEqual(expected, actual);
@@ -69,7 +77,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             var text = string.Format("The name of my console project is '_S_ConsoleProjectName_S_',{0}and the name of the corresponding library project is '_S_LibraryProjectName_S_'.{0}This is an _S_ProjectDescription_S_ The following '_S_SomeUnknownVariable_S_' is unknown and should not be resolved, just leave it as is.", Environment.NewLine);
             TestData.CreateTestTextFile(_sourceTestFile, Encoding.UTF8, text);
             var expected = string.Format("The name of my console project is 'My.Football.Manager',{0}and the name of the corresponding library project is 'My.Football.Manager.Library'.{0}This is an application for management of football teams. The following '_S_SomeUnknownVariable_S_' is unknown and should not be resolved, just leave it as is.", Environment.NewLine);
-            var target = new FileResolver(_fileEncoding, _textResolver, _logger);
+            var target = new FileResolver(_fileEncoding, _textResolver, _fileCopy, _logger);
             target.Resolve(_sourceTestFile, _targetTestFile);
             var actual = TestData.ReadTestTextFile(_targetTestFile, Encoding.UTF8);
             Assert.AreEqual(expected, actual);
@@ -81,9 +89,9 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             //Try to resolve the current test dll and check that the resul is an untouched
             var binaryFile = new FileInfo(typeof (ResolveFileTests).Assembly.Location);
             File.Copy(binaryFile.FullName,_sourceTestFile, true);
-            var target = new FileResolver(_fileEncoding, _textResolver, _logger);
+            var target = new FileResolver(_fileEncoding, _textResolver, _fileCopy, _logger);
             target.Resolve(_sourceTestFile, _targetTestFile);
-            Assert.IsTrue(_fileComparer.Compare(_sourceTestFile,_targetTestFile) == CompareResult.Equal);
+            Assert.IsTrue(_fileComparer.Compare(new FileInfo(_sourceTestFile),new FileInfo(_targetTestFile)) == CompareResult.Equal);
         }
     }
 }
