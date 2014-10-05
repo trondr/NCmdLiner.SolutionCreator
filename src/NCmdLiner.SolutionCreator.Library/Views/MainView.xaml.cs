@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using NCmdLiner.SolutionCreator.Library.ViewModels;
 
 namespace NCmdLiner.SolutionCreator.Library.Views
 {
@@ -7,8 +7,9 @@ namespace NCmdLiner.SolutionCreator.Library.Views
     /// </summary>
     public partial class MainView : ViewBase
     {
-        public MainView()
+        public MainView(MainViewModel viewModel)
         {
+            this.ViewModel = viewModel;
             InitializeComponent();
         }
     }

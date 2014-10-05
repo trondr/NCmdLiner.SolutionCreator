@@ -7,16 +7,26 @@ namespace NCmdLiner.SolutionCreator.Library.Views
 {
     public class ViewBase: UserControl
     {
+        private ViewModelBase _viewModel;
+
         protected ViewBase()
         {
-            Loaded+=OnLoaded;
+            //Loaded+=OnLoaded;
         }
 
-        public ViewModelBase ViewModel { get; set; }
-
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        public ViewModelBase ViewModel
         {
-            this.DataContext = this.ViewModel;
+            get { return _viewModel; }
+            set
+            {
+                _viewModel = value;
+                this.DataContext = _viewModel;
+            }
         }
+
+        //private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        //{
+        //    this.DataContext = this.ViewModel;            
+        //}
     }
 }
