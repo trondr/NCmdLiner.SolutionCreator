@@ -1,8 +1,10 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using Common.Logging;
+using NCmdLiner.SolutionCreator.Library.Model;
 using NCmdLiner.SolutionCreator.Library.Services;
 using NCmdLiner.SolutionCreator.Library.ViewModels;
 using NCmdLiner.SolutionCreator.Library.Views;
@@ -52,8 +54,9 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
                 var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ProductName);
                 if (!Directory.Exists(targetSolutionFolder))
                 {
-                    _logger.Info("Creating new solution by resolving template folder to new solution folder.");
-                    _folderResolver.Resolve(_templateProvider.ActiveTemplate.Path, targetSolutionFolder);
+                    var template = _templateProvider.Templates.ToList()[0];
+                    _logger.InfoFormat("Creating new solution by resolving template folder '{0}' to new solution folder '{1}'.", template.Path, targetSolutionFolder);
+                    _folderResolver.Resolve(template.Path, targetSolutionFolder);
                 }
                 else
                 {

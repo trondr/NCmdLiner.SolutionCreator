@@ -14,7 +14,7 @@ namespace NCmdLiner.SolutionCreator
             var returnValue = 0;
             try
             {
-                ILog logger = LogManager.GetCurrentClassLogger();
+                var logger = LogManager.GetCurrentClassLogger();
                 var applicationInfo = BootStrapper.Container.Resolve<IApplicationInfo>();
                 try
                 {
@@ -47,6 +47,13 @@ namespace NCmdLiner.SolutionCreator
             {
                 Console.WriteLine("Fatal error when wiring up the application.{0}{1}", Environment.NewLine, ex);
                 returnValue = 3;
+            }
+            finally
+            {                
+#if DEBUG
+                Console.WriteLine("Press ENTER again...");
+                Console.ReadLine();
+#endif
             }
             return returnValue;
         }

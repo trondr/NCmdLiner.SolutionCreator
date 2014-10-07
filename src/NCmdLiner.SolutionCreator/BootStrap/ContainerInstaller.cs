@@ -22,8 +22,8 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Register(Component.For<ITypedFactoryComponentSelector>().ImplementedBy<CustomTypeFactoryComponentSelector>());
 
             //Configure logging
-            ILoggingConfiguration loggingConfiguration = new LoggingConfiguration();
-            log4net.GlobalContext.Properties["LogFile"] = Path.Combine(loggingConfiguration.LogDirectoryPath, loggingConfiguration.LogFileName);
+            IConfiguration configuration = new Configuration();
+            log4net.GlobalContext.Properties["LogFile"] = Path.Combine(configuration.LogDirectoryPath, configuration.LogFileName);
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
 
             var applicationRootNameSpace = typeof (Program).Namespace;

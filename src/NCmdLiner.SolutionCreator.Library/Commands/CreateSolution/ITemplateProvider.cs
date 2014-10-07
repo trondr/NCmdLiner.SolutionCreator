@@ -6,7 +6,5 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
     public interface ITemplateProvider
     {
         IEnumerable<Template> Templates { get; set; }
-
-        Template ActiveTemplate { get; set; }
     }
 }
