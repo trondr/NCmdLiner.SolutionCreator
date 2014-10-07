@@ -58,9 +58,11 @@
     <Compile Include="BootStrap\IConfiguration.cs" />
     <Compile Include="BootStrap\Configuration.cs" />
     <Compile Include="Commands\CreateSolution\ISolutionCreator.cs" />
-    <Compile Include="Commands\CreateSolution\ITemplateProvider.cs" />
+    <Compile Include="Services\ITemplatePath.cs" />
+    <Compile Include="Services\ITemplateProvider.cs" />
     <Compile Include="Commands\CreateSolution\SolutionCreator.cs" />
-    <Compile Include="Commands\CreateSolution\TemplateProvider.cs" />
+    <Compile Include="Services\TemplatePath.cs" />
+    <Compile Include="Services\TemplateProvider.cs" />
     <Compile Include="Common\ApplicationInfoHelper.cs" />
     <Compile Include="Common\CommandsBase.cs" />
     <Compile Include="Common\IO\CompareResult.cs" />

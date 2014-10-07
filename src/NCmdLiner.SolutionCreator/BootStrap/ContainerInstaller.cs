@@ -6,8 +6,10 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Common.Logging;
+using Common.Logging.Simple;
 using NCmdLiner.SolutionCreator.Library.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common;
+using NCmdLiner.SolutionCreator.Library.Services;
 using NCmdLiner.SolutionCreator.Library.ViewModels;
 using NCmdLiner.SolutionCreator.Library.Views;
 
@@ -22,7 +24,8 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Register(Component.For<ITypedFactoryComponentSelector>().ImplementedBy<CustomTypeFactoryComponentSelector>());
 
             //Configure logging
-            IConfiguration configuration = new Configuration();
+            var logger = new ConsoleOutLogger(this.GetType().Name, LogLevel.All, true, false, false, "yyyy-MM-dd hh:mm:ss");
+            IConfiguration configuration = new Configuration(new TemplatePath(), logger);
             log4net.GlobalContext.Properties["LogFile"] = Path.Combine(configuration.LogDirectoryPath, configuration.LogFileName);
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
 

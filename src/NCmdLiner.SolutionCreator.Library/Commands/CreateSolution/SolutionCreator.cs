@@ -54,9 +54,18 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
                 var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ProductName);
                 if (!Directory.Exists(targetSolutionFolder))
                 {
-                    var template = _templateProvider.Templates.ToList()[0];
-                    _logger.InfoFormat("Creating new solution by resolving template folder '{0}' to new solution folder '{1}'.", template.Path, targetSolutionFolder);
-                    _folderResolver.Resolve(template.Path, targetSolutionFolder);
+                    var templates = _templateProvider.Templates.ToList();
+                    _logger.Debug("Found number of templates: " + templates.Count);
+                    if (templates.Count > 0)
+                    {
+                        var template = templates[0];
+                        _logger.InfoFormat("Creating new solution by resolving template folder '{0}' to new solution folder '{1}'.", template.Path, targetSolutionFolder);
+                        _folderResolver.Resolve(template.Path, targetSolutionFolder);
+                    }
+                    else
+                    {                        
+                        throw new Exception("No availble templates to resolve");
+                    }
                 }
                 else
                 {

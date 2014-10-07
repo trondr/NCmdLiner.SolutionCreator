@@ -37,7 +37,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
                 return Variables[name];
             }
             //All context variable names on format GuidN will return a guid, one unique guid for each index N
-            if (GuidRegex.IsMatch(name))
+            if (GuidRegex.IsMatch(name) || SpecialGuidRegex.IsMatch(name))
             {
                 AddVariable(name, _guidGeneator.GetNewGuid());
                 return Variables[name];
@@ -58,5 +58,16 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         }
         private Regex _guidRegex;
 
+        private Regex SpecialGuidRegex
+        {
+            get 
+            {
+                if (_specialGuidRegex != null) return _specialGuidRegex;
+                const string guidPattern = @"ECD7A685-EDCC-474C-AD38-[0-9a-fA-F]{12}";
+                _specialGuidRegex = new Regex(guidPattern, RegexOptions.IgnorePatternWhitespace);
+                return _specialGuidRegex;
+            }
+        }
+        private Regex _specialGuidRegex;
     }
 }

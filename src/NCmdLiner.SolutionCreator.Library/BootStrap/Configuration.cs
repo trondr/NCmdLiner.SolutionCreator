@@ -4,11 +4,22 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Windows.Documents;
+using Common.Logging;
+using NCmdLiner.SolutionCreator.Library.Services;
 
 namespace NCmdLiner.SolutionCreator.Library.BootStrap
 {
     public class Configuration : IConfiguration
     {
+        private readonly ITemplatePath _templatePath;
+        private readonly ILog _logger;
+
+        public Configuration(ITemplatePath templatePath, ILog logger)
+        {
+            _templatePath = templatePath;
+            _logger = logger;
+        }
+
         private string _logDirectoryPath;
         private string _logFileName;        
         private IEnumerable<string> _templatesFolders;
@@ -68,15 +79,19 @@ namespace NCmdLiner.SolutionCreator.Library.BootStrap
                     var templatesFoldersString = Section["TemplatesFolders"];
                     var templatesFolders = templatesFoldersString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var templatesFolder in templatesFolders)
-                    {
-                        yield return Path.GetFullPath(Environment.ExpandEnvironmentVariables(templatesFolder));
+                    {                        
+                        var resolvedTemplatesFolder = _templatePath.GetFullPath(templatesFolder);
+                        _logger.Debug("Template folder: " + resolvedTemplatesFolder);
+                        yield return resolvedTemplatesFolder;
                     }
                 }
                 else
                 {
                     foreach (var templatesFolder in _templatesFolders)
                     {
-                        yield return Path.GetFullPath(Environment.ExpandEnvironmentVariables(templatesFolder));
+                        var resolvedTemplatesFolder = _templatePath.GetFullPath(templatesFolder);
+                        _logger.Debug("Template folder: " + resolvedTemplatesFolder);
+                        yield return resolvedTemplatesFolder;
                     }    
                 }                
             }

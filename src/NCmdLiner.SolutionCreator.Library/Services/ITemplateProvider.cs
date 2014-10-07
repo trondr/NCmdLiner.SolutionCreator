@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NCmdLiner.SolutionCreator.Library.Model;
 
-namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
+namespace NCmdLiner.SolutionCreator.Library.Services
 {
     public interface ITemplateProvider
     {

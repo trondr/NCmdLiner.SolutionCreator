@@ -115,5 +115,18 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             expected = null;
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void ContextGetVariableSpecialGuidTest()
+        {
+            _stubGuidGenerator = MockRepository.GenerateStub<IGuidGeneator>();
+            _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Return(_guid1).Repeat.Once();
+            _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Return(_guid2).Repeat.Once();
+            var target = new Context(_stubGuidGenerator, _logger);
+            const string variableName = "ECD7A685-EDCC-474C-AD38-000000000001";
+            var expected = _guid1;
+            var actual = target.GetVariable(variableName);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
