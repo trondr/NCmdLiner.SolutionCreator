@@ -71,20 +71,23 @@
     </InstallExecuteSequence>
 
     <Media Id="1" Cabinet="$(var.ProductProjectName)" EmbedCab="yes" CompressionLevel="high"/>
-    
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="CompanyFolder" Name="$(var.CompanyName)">
           <Directory Id="TargetBaseFolder" Name="$(var.TargetFolderName)">
-            <Directory Id="TargetFolder" Name="!(bind.FileVersion.ProductDll)" ></Directory>
+            <Directory Id="TargetFolder" Name="!(bind.FileVersion.ProductDll)" >
+              <Directory Id="TemplatesFolder" Name="Templates" />
+            </Directory>
           </Directory>
         </Directory>
-      </Directory>      
+      </Directory>
     </Directory>
     
     <Feature Id="ProductFeature" Title="$(var.ProductFeature)" Level="1">
       <ComponentGroupRef Id="ProductComponents_WiXComponentGroup" />
       <ComponentGroupRef Id="Components_WiXComponentGroup" />
+      <ComponentGroupRef Id="Templates_WiXComponentGroup" />
     </Feature>
 
     <WixVariable Id="WixUIBannerBmp" Value="WixUIBanner.bmp"/>

@@ -18,7 +18,11 @@ namespace NCmdLiner.SolutionCreator.Library.Common.UI
             return _canExecute;
         }
 
-        public event EventHandler CanExecuteChanged;
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
 
         public void Execute(object parameter)
         {

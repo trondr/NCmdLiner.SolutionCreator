@@ -56,6 +56,21 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
+
+  <!-- Verify that solution templates have been downloaded-->
+
+  <Choose>
+    <When Condition="Exists('$(SrcDirectory)\NCmdLiner.SolutionTemplates')">
+      <PropertyGroup>
+        <SolutionTemplatesHaveBeenDownloaded>true</SolutionTemplatesHaveBeenDownloaded>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <SolutionTemplatesHaveBeenDownloaded>false</SolutionTemplatesHaveBeenDownloaded>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
  
   <ItemGroup>
     <DefaultExclude Include="$(SrcDirectory)\**\.hg\**" />
@@ -72,14 +87,29 @@
     <DefaultExclude Include="$(SrcDirectory)\**\*.user" />
     <DefaultExclude Include="$(SrcDirectory)\**\*.suo" />
     <DefaultExclude Include="$(SrcDirectory)\**\*.zip" />
-    <DefaultExclude Include="$(SrcDirectory)\**\*.txt" />
+    <DefaultExclude Include="$(SrcDirectory)\**\*.txt" />    
   </ItemGroup>
+
+  <Target Name="DownloadTemplates" Condition=" '$(SolutionTemplatesHaveBeenDownloaded)' == 'false' " >
+    <Exec Command='git.exe clone https://github.com/trondr/NCmdLiner.SolutionTemplates.git "$(SrcDirectory)\NCmdLiner.SolutionTemplates"' >
+      <Output TaskParameter='ExitCode' PropertyName='ErrorCode' />
+    </Exec>
+    <Message Importance="high" Text="Git.exe returned with exit code: $(ErrorCode)"/>
+    <Message Importance="high" Text="Git.exe returned with exit code: $(ErrorCode)"/>
+  </Target>
+
+  <Target Name="UpdateTemplates" DependsOnTargets="DownloadTemplates">
+    <Exec Command='git.exe pull' WorkingDirectory='$(SrcDirectory)\NCmdLiner.SolutionTemplates'>
+      <Output TaskParameter='ExitCode' PropertyName='ErrorCode' />
+    </Exec>
+    <Message Importance="high" Text="Git.exe returned with exit code: $(ErrorCode)"/>
+  </Target>
 
   <ItemGroup>
     <SourceFiles Include="$(SrcDirectory)\**\*.*" Exclude="@(DefaultExclude)" />
   </ItemGroup>
 
-  <Target Name="Version">
+  <Target Name="Version" DependsOnTargets="UpdateTemplates">
     <GitVersion LocalPath="$(MSBuildProjectDirectory)" Timeout="5000">
       <Output TaskParameter="CommitHash" PropertyName="RevisionHash" />
     </GitVersion>
