@@ -6,13 +6,12 @@
              xmlns:views="clr-namespace:NCmdLiner.SolutionCreator.Library.Views"
              xmlns:viewModels="clr-namespace:NCmdLiner.SolutionCreator.Library.ViewModels"
              xmlns:diag ="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-             mc:Ignorable="d" 
-             d:DesignHeight="330" d:DesignWidth="500">
+             mc:Ignorable="d" d:DesignWidth="500" Height="343">
     <DockPanel d:DataContext="{d:DesignInstance Type=viewModels:DesignTimeMainViewModel, IsDesignTimeCreatable=True}" Margin="5" >
         <DockPanel DockPanel.Dock="Left">
             <DockPanel Dock="Top" Margin="2">
                 <Label Content="{Binding Path=CompanyNameLabelText,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="{Binding Path=MaxLabelWidth, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Text="{Binding Path=CompanyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Text="{Binding Path=CompanyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel Dock="Top" Margin="2">
                 <Label Content="{Binding Path=NamespaceCompanyNameLabelText, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="{Binding Path=MaxLabelWidth, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -45,6 +44,10 @@
             <DockPanel Dock="Top" Margin="2">
                 <Label Content="{Binding Path=SetupProjectNameLabelText, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="{Binding Path=MaxLabelWidth, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox Text="{Binding Path=SetupProjectName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <DockPanel Dock="Top" Margin="2">
+                <Label Content="{Binding Path=AuthorsLableText, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="{Binding Path=MaxLabelWidth, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Path=Authors, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
             <DockPanel Dock="Right" Margin="2">
                 <Button Command="{Binding OkCommand}" Width="50">OK</Button>

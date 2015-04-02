@@ -6,25 +6,27 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
     {
         public DesignTimeMainViewModel()
         {
-            this.CompanyName = "My Company";
-            this.CompanyNameLabelText = "Company Name:";
-            this.NamespaceCompanyName = "MyCompany";
-            this.NamespaceCompanyNameLabelText = "Namespace Company Name:";
-            this.ProductName = "My Product";
-            this.ProductNameLabelText = "Product Name:";
-            this.ShortProductName = "My.Product";
-            this.ShortProductNameLabelText = "Short Product Name:";
-            this.ProductDescription = "My Product Description";
-            this.ProductDescriptionLabelText = "Product Description:";
-            this.ConsoleProjectName = "MyCompany.MyProduct";
-            this.ConsoleProjectNameLabelText = "Console Project Name:";
-            this.LibraryProjectName = "MyCompany.MyProduct.Library";
-            this.LibraryProjectNameLabelText = "Library Project Name:";
-            this.TestsProjectName = "MyCompany.MyProduct.Tests";
-            this.TestsProjectNameLabelText = "Tests Project Name:";
-            this.SetupProjectName = "MyCompany.MyProduct.Setup";
-            this.SetupProjectNameLabelText = "Setup Project Name:";
-            this.MaxLabelWidth = this.NamespaceCompanyNameLabelText.Length * 10;
+            CompanyName = "My Company";
+            CompanyNameLabelText = "Company Name:";
+            NamespaceCompanyName = "MyCompany";
+            NamespaceCompanyNameLabelText = "Namespace Company Name:";
+            ProductName = "My Product";
+            ProductNameLabelText = "Product Name:";
+            ShortProductName = "My.Product";
+            ShortProductNameLabelText = "Short Product Name:";
+            ProductDescription = "My Product Description";
+            ProductDescriptionLabelText = "Product Description:";
+            ConsoleProjectName = "MyCompany.MyProduct";
+            ConsoleProjectNameLabelText = "Console Project Name:";
+            LibraryProjectName = "MyCompany.MyProduct.Library";
+            LibraryProjectNameLabelText = "Library Project Name:";
+            TestsProjectName = "MyCompany.MyProduct.Tests";
+            TestsProjectNameLabelText = "Tests Project Name:";
+            SetupProjectName = "MyCompany.MyProduct.Setup";
+            SetupProjectNameLabelText = "Setup Project Name:";
+            AuthorsLableText = "Authors:";
+            Authors = "dev1@some.domain.com, dev2@some.domain.com";
+            MaxLabelWidth = NamespaceCompanyNameLabelText.Length * 10;
         }
 
         public string NamespaceCompanyNameLabelText { get; set; }
@@ -46,6 +48,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         public string TestsProjectNameLabelText { get; set; }
         public string SetupProjectName { get; set; }
         public string SetupProjectNameLabelText { get; set; }
+        public string Authors { get; set; }
+        public string AuthorsLableText { get; set; }
         public ICommand OkCommand { get; set; }
 
     }

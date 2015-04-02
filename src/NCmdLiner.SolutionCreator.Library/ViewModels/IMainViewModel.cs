@@ -23,6 +23,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         string TestsProjectNameLabelText { get; set; }
         string SetupProjectName { get; set; }
         string SetupProjectNameLabelText { get; set; }
+        string Authors { get; set; }
+        string AuthorsLableText { get; set; }
         ICommand OkCommand { get; set; }
     }
 }

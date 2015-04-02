@@ -27,8 +27,7 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
             _templateProvider = templateProvider;
             _logger = logger;
         }
-
-
+        
         public int Create(string targetRootFolder)
         {
             var returnValue = 0;
@@ -50,7 +49,7 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
                 _context.AddVariable("SetupProjectName", viewModel.SetupProjectName);
                 _context.AddVariable("Year", DateTime.Now.Year.ToString(CultureInfo.InvariantCulture));
                 _context.AddVariable("RootNamespace", viewModel.NamespaceCompanyName + "." + viewModel.ProductName);
-
+                _context.AddVariable("Authors", viewModel.Authors);
                 var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ProductName);
                 if (!Directory.Exists(targetSolutionFolder))
                 {

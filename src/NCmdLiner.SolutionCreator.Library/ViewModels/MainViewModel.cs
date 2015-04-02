@@ -19,6 +19,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             LibraryProjectNameLabelText = "Library Project Name:";
             TestsProjectNameLabelText = "Tests Project Name:";
             SetupProjectNameLabelText = "Setup Project Name:";
+            AuthorsLableText = "Authors:";
             MaxLabelWidth = 200 ;
             OkCommand = new CommandHandler(this.Exit, true);
         }
@@ -214,6 +215,24 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         {
             get { return (string)GetValue(SetupProjectNameLabelTextProperty); }
             set { SetValue(SetupProjectNameLabelTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty AuthorsProperty = DependencyProperty.Register(
+            "Authors", typeof (string), typeof (MainViewModel), new PropertyMetadata(default(string)));
+
+        public string Authors
+        {
+            get { return (string) GetValue(AuthorsProperty); }
+            set { SetValue(AuthorsProperty, value); }
+        }
+
+        public static readonly DependencyProperty AuthorsLableTextProperty = DependencyProperty.Register(
+            "AuthorsLableText", typeof (string), typeof (MainViewModel), new PropertyMetadata(default(string)));
+
+        public string AuthorsLableText
+        {
+            get { return (string) GetValue(AuthorsLableTextProperty); }
+            set { SetValue(AuthorsLableTextProperty, value); }
         }
 
         public static readonly DependencyProperty MaxLabelWidthProperty = DependencyProperty.Register(
