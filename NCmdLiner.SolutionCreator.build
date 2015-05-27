@@ -32,6 +32,7 @@
     <When Condition="Exists('$(ToolsDirectory)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
       <PropertyGroup>
         <MSBuildCommunityTasksAvailable>true</MSBuildCommunityTasksAvailable>
+		<MSBuildCommunityTasksPath>$(ToolsDirectory)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
       </PropertyGroup>
     </When>
     <Otherwise>
