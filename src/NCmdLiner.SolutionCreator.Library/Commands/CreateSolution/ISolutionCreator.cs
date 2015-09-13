@@ -1,9 +1,9 @@
-﻿using System.Windows.Documents;
+﻿using NCmdLiner.SolutionCreator.Library.Model;
 
 namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
 {
     public interface ISolutionCreator
     {
-        int Create(string targetRootFolder);
+        int Create(string targetRootFolder, ISolutionInfo solutionInfo);
     }
 }

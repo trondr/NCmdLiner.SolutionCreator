@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Windows.Documents;
+﻿using System.IO;
 using Common.Logging;
-using NCmdLiner.SolutionCreator.Library.Common;
 using NCmdLiner.SolutionCreator.Library.Common.IO;
 
 namespace NCmdLiner.SolutionCreator.Library.Services
@@ -24,8 +20,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         }
 
         public void Resolve(string sourceFile, string targetFile)
-        {
-            ToDo.Implement(ToDoPriority.Critical, "trondr","Implement resolve of file");
+        {            
             var fileEncoding = _fileEncoding.GetEncoding(sourceFile);
             string resolvedText;
             var copyAction = CopyAction.Resolve;

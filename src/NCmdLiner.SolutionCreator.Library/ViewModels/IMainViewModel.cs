@@ -25,6 +25,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         string SetupProjectNameLabelText { get; set; }
         string Authors { get; set; }
         string AuthorsLableText { get; set; }
+        string ScriptInstallProjectName { get; set; }
+        string ScriptInstallProjectNameLabelText { get; set; }
         ICommand OkCommand { get; set; }
     }
 }

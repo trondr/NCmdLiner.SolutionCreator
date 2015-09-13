@@ -47,6 +47,9 @@
     <AssemblyOriginatorKeyFile>NCmdLiner.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\tools\NuGetPackages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\tools\NuGetPackages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -68,8 +71,9 @@
     <Reference Include="log4net">
       <HintPath>..\..\tools\NuGetPackages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NCmdLiner">
-      <HintPath>..\..\tools\NuGetPackages\NCmdLiner.1.0.13304.114\lib\net45\NCmdLiner.dll</HintPath>
+    <Reference Include="NCmdLiner, Version=1.0.15244.126, Culture=neutral, PublicKeyToken=37f01c356c8e03d5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\NuGetPackages\NCmdLiner.1.0.15244.126\lib\net45\NCmdLiner.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -130,7 +134,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>mkdir "$(TargetDir)Templates"
+    <PreBuildEvent>rmdir "$(TargetDir)Templates" /s /q
+mkdir "$(TargetDir)Templates"
 xcopy "$(ProjectDir)..\NCmdLiner.SolutionTemplates" "$(TargetDir)Templates" /Y /E</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

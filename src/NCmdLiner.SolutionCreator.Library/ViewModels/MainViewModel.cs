@@ -19,6 +19,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             LibraryProjectNameLabelText = "Library Project Name:";
             TestsProjectNameLabelText = "Tests Project Name:";
             SetupProjectNameLabelText = "Setup Project Name:";
+            ScriptInstallProjectNameLabelText = "Script Install Project Name:";
             AuthorsLableText = "Authors:";
             MaxLabelWidth = 200 ;
             OkCommand = new CommandHandler(this.Exit, true);
@@ -31,6 +32,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         {
             var viewModel = (MainViewModel)d;
             viewModel.NamespaceCompanyName = viewModel.CompanyName.Replace(" ", "");
+            viewModel.ScriptInstallProjectName = viewModel.CompanyName + " " + viewModel.ProductName + " %Version%";
             CommandManager.InvalidateRequerySuggested();
         }
 
@@ -67,7 +69,6 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             set { SetValue(NamespaceCompanyNameLabelTextProperty, value); }
         }
 
-
         public static readonly DependencyProperty ProductNameProperty = DependencyProperty.Register(
             "ProductName", typeof(string), typeof(MainViewModel), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsMeasure, ProductNameChanged));
 
@@ -75,6 +76,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         {
             var viewModel = (MainViewModel)d;
             viewModel.ShortProductName = viewModel.ProductName.Replace(" ", ".");
+            viewModel.ScriptInstallProjectName = viewModel.CompanyName + " " + viewModel.ProductName + " %Version%";
             CommandManager.InvalidateRequerySuggested();
         }
 
@@ -217,8 +219,26 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             set { SetValue(SetupProjectNameLabelTextProperty, value); }
         }
 
+        public static readonly DependencyProperty ScriptInstallProjectNameProperty = DependencyProperty.Register(
+            "ScriptInstallProjectName", typeof (string), typeof (MainViewModel), new PropertyMetadata(default(string)));
+
+        public string ScriptInstallProjectName
+        {
+            get { return (string) GetValue(ScriptInstallProjectNameProperty); }
+            set { SetValue(ScriptInstallProjectNameProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScriptInstallProjectNameLabelTextProperty = DependencyProperty.Register(
+            "ScriptInstallProjectNameLabelText", typeof (string), typeof (MainViewModel), new PropertyMetadata(default(string)));
+
+        public string ScriptInstallProjectNameLabelText
+        {
+            get { return (string) GetValue(ScriptInstallProjectNameLabelTextProperty); }
+            set { SetValue(ScriptInstallProjectNameLabelTextProperty, value); }
+        }
+        
         public static readonly DependencyProperty AuthorsProperty = DependencyProperty.Register(
-            "Authors", typeof (string), typeof (MainViewModel), new PropertyMetadata(default(string)));
+    "Authors", typeof(string), typeof(MainViewModel), new PropertyMetadata(default(string)));
 
         public string Authors
         {
@@ -263,15 +283,18 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             get
             {
                 return
+                    !string.IsNullOrEmpty(this.Authors) &&
                     !string.IsNullOrEmpty(this.CompanyName) &&
-                    !string.IsNullOrEmpty(this.NamespaceCompanyName) &&
-                    !string.IsNullOrEmpty(this.ProductName) &&
-                    !string.IsNullOrEmpty(this.ShortProductName) &&
-                    !string.IsNullOrEmpty(this.ProductDescription) &&
                     !string.IsNullOrEmpty(this.ConsoleProjectName) &&
                     !string.IsNullOrEmpty(this.LibraryProjectName) &&
-                    !string.IsNullOrEmpty(this.TestsProjectName) &&
-                    !string.IsNullOrEmpty(this.SetupProjectName);
+                    !string.IsNullOrEmpty(this.NamespaceCompanyName) &&
+                    !string.IsNullOrEmpty(this.ProductDescription) &&
+                    !string.IsNullOrEmpty(this.ProductName) &&
+                    !string.IsNullOrEmpty(this.ScriptInstallProjectName) &&
+                    !string.IsNullOrEmpty(this.SetupProjectName) &&
+                    !string.IsNullOrEmpty(this.ShortProductName) &&
+                    !string.IsNullOrEmpty(this.TestsProjectName)
+                    ;
             }
         }
     }

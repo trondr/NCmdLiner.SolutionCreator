@@ -38,6 +38,9 @@
     <AssemblyOriginatorKeyFile>NCmdLiner.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\tools\NuGetPackages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\..\tools\NuGetPackages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
@@ -58,6 +61,8 @@
     <Compile Include="BootStrap\IConfiguration.cs" />
     <Compile Include="BootStrap\Configuration.cs" />
     <Compile Include="Commands\CreateSolution\ISolutionCreator.cs" />
+    <Compile Include="Model\ISolutionInfo.cs" />
+    <Compile Include="Model\SolutionInfo.cs" />
     <Compile Include="Services\ITemplatePath.cs" />
     <Compile Include="Services\ITemplateProvider.cs" />
     <Compile Include="Commands\CreateSolution\SolutionCreator.cs" />

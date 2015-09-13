@@ -1,8 +1,10 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Windows;
+using AutoMapper;
 using Common.Logging;
 using NCmdLiner.SolutionCreator.Library.Model;
 using NCmdLiner.SolutionCreator.Library.Services;
@@ -26,50 +28,68 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
             _folderResolver = folderResolver;
             _templateProvider = templateProvider;
             _logger = logger;
+            Mapper.CreateMap<ISolutionInfo, IMainViewModel>();
         }
         
-        public int Create(string targetRootFolder)
+        public int Create(string targetRootFolder, ISolutionInfo solutionInfo)
         {
             var returnValue = 0;
             _logger.Info("Getting basic info from the user");
             var application = new System.Windows.Application();
-            application.Run(_mainWindow);
             var viewModel = _mainWindow.View.ViewModel as MainViewModel;
+            Mapper.Map(solutionInfo, viewModel);
+            application.Run(_mainWindow);
+            
             if (viewModel != null)
             {
-                _logger.Info("Transfering basic information from the user into the resolver context dictionary.");
-                _context.AddVariable("CompanyName", viewModel.CompanyName);
-                _context.AddVariable("NamespaceCompany", viewModel.NamespaceCompanyName);
-                _context.AddVariable("ProductName", viewModel.ProductName);
-                _context.AddVariable("ShortProductName", viewModel.ShortProductName);
-                _context.AddVariable("ProductDescription", viewModel.ProductDescription);
-                _context.AddVariable("ConsoleProjectName", viewModel.ConsoleProjectName);
-                _context.AddVariable("LibraryProjectName", viewModel.LibraryProjectName);
-                _context.AddVariable("TestsProjectName", viewModel.TestsProjectName);
-                _context.AddVariable("SetupProjectName", viewModel.SetupProjectName);
-                _context.AddVariable("Year", DateTime.Now.Year.ToString(CultureInfo.InvariantCulture));
-                _context.AddVariable("RootNamespace", viewModel.NamespaceCompanyName + "." + viewModel.ProductName);
-                _context.AddVariable("Authors", viewModel.Authors);
-                var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ProductName);
-                if (!Directory.Exists(targetSolutionFolder))
+                if (viewModel.IsFilledOut)
                 {
-                    var templates = _templateProvider.Templates.ToList();
-                    _logger.Debug("Found number of templates: " + templates.Count);
-                    if (templates.Count > 0)
+                    _logger.Info("Transfering basic information from the user into the resolver context dictionary.");
+                    _context.AddVariable("CompanyName", viewModel.CompanyName);
+                    _context.AddVariable("NamespaceCompany", viewModel.NamespaceCompanyName);
+                    _context.AddVariable("ProductName", viewModel.ProductName);
+                    _context.AddVariable("ShortProductName", viewModel.ShortProductName);                    
+                    _context.AddVariable("ProductDescription", viewModel.ProductDescription);
+                    _context.AddVariable("ConsoleProjectName", viewModel.ConsoleProjectName);
+                    _context.AddVariable("ConsoleProjectNameU", viewModel.ConsoleProjectName.Replace(".", "_").Replace("__", "_"));
+                    _context.AddVariable("LibraryProjectName", viewModel.LibraryProjectName);
+                    _context.AddVariable("LibraryProjectNameU", viewModel.LibraryProjectName.Replace(".", "_").Replace("__", "_"));
+                    _context.AddVariable("TestsProjectName", viewModel.TestsProjectName);
+                    _context.AddVariable("TestsProjectNameU", viewModel.TestsProjectName.Replace(".", "_").Replace("__", "_"));
+                    _context.AddVariable("SetupProjectName", viewModel.SetupProjectName);
+                    _context.AddVariable("SetupProjectNameU", viewModel.SetupProjectName.Replace(".", "_").Replace("__", "_"));
+                    _context.AddVariable("ScriptInstallProjectName", viewModel.ScriptInstallProjectName);
+                    _context.AddVariable("ScriptInstallProjectNameU", viewModel.ScriptInstallProjectName.Replace(" ", "_").Replace(".", "_").Replace("__", "_"));
+                    _context.AddVariable("Year", DateTime.Now.Year.ToString(CultureInfo.InvariantCulture));
+                    _context.AddVariable("RootNamespace", viewModel.NamespaceCompanyName + "." + viewModel.ProductName);
+                    _context.AddVariable("Authors", viewModel.Authors);
+                    var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ShortProductName);
+                    if (!Directory.Exists(targetSolutionFolder))
                     {
-                        var template = templates[0];
-                        _logger.InfoFormat("Creating new solution by resolving template folder '{0}' to new solution folder '{1}'.", template.Path, targetSolutionFolder);
-                        _folderResolver.Resolve(template.Path, targetSolutionFolder);
+                        var templates = _templateProvider.Templates.ToList();
+                        _logger.Debug("Found number of templates: " + templates.Count);
+                        if (templates.Count > 0)
+                        {
+                            var template = templates[0];
+                            _logger.InfoFormat("Creating new solution by resolving template folder '{0}' to new solution folder '{1}'.", template.Path, targetSolutionFolder);
+                            _folderResolver.Resolve(template.Path, targetSolutionFolder);
+                        }
+                        else
+                        {
+                            throw new Exception("No availble templates to resolve");
+                        }
                     }
                     else
-                    {                        
-                        throw new Exception("No availble templates to resolve");
+                    {
+                        _logger.ErrorFormat("Cannot create new solution. The target solution folder '{0}' allready exists.", targetSolutionFolder);
+                        MessageBox.Show("Cannot create new solution. Target solution folder allreay exists: " + targetSolutionFolder, "");
+                        returnValue = 1;
                     }
                 }
                 else
                 {
-                    _logger.ErrorFormat("Cannot create new solution. The target solution folder '{0}' allready exists.", targetSolutionFolder);
-                    MessageBox.Show("Cannot create new solution. Target solution folder allreay exists: " + targetSolutionFolder,"");
+                    _logger.Error("Cannot create new solution. All fields were not filled out.");
+                    MessageBox.Show("Cannot create new solution. All fields were not filled out.");
                     returnValue = 1;
                 }
             }

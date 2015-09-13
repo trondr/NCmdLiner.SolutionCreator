@@ -22,8 +22,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         }
 
         public void Resolve(string sourceFolder, string targetFolder)
-        {
-            ToDo.CodeReview(ToDoPriority.Critical,"trondr","Implement resolve folder");
+        {            
             if(!Directory.Exists(sourceFolder)) throw new DirectoryNotFoundException("Source folder not found: " + sourceFolder);
             
             var sourceDirectory = new DirectoryInfo(sourceFolder);

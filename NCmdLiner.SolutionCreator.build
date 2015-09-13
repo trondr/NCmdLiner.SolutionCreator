@@ -157,7 +157,7 @@
     <Message Text="AssemblyVersion: $(AssemblyVersion)"/>
   </Target>
 
-  <Target Name="Version" DependsOnTargets="GitHash;UpdateTemplates">
+  <Target Name="Version" DependsOnTargets="GitHash">
     <XmlRead XPath="/version/property[@name='major']/@value" XmlFileName="version.xml">
       <Output TaskParameter="Value" PropertyName="Major" />
     </XmlRead>

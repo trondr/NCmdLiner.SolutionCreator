@@ -2,6 +2,7 @@
 using NCmdLiner.Attributes;
 using NCmdLiner.SolutionCreator.Library.Commands.CreateSolution;
 using NCmdLiner.SolutionCreator.Library.Common;
+using NCmdLiner.SolutionCreator.Library.Model;
 
 namespace NCmdLiner.SolutionCreator.Commands
 {
@@ -24,7 +25,8 @@ namespace NCmdLiner.SolutionCreator.Commands
         {
             var returnValue = 0;
             _logger.Info("Start CreateSolution...");
-            returnValue = _solutionCreator.Create(targetRootFolder);            
+            ISolutionInfo solutionInfo = new SolutionInfo();
+            returnValue = _solutionCreator.Create(targetRootFolder, solutionInfo);
             _logger.Info("End CreateSolution.");
             return returnValue;
         }

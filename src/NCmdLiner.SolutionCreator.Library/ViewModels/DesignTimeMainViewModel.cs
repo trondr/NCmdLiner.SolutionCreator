@@ -27,6 +27,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             AuthorsLableText = "Authors:";
             Authors = "dev1@some.domain.com, dev2@some.domain.com";
             MaxLabelWidth = NamespaceCompanyNameLabelText.Length * 10;
+            ScriptInstallProjectName = CompanyName + " " + ProductName + " %Version%";
+            ScriptInstallProjectNameLabelText = "Script Install Project Name:";
         }
 
         public string NamespaceCompanyNameLabelText { get; set; }
@@ -50,6 +52,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         public string SetupProjectNameLabelText { get; set; }
         public string Authors { get; set; }
         public string AuthorsLableText { get; set; }
+        public string ScriptInstallProjectName { get; set; }
+        public string ScriptInstallProjectNameLabelText { get; set; }
         public ICommand OkCommand { get; set; }
 
     }

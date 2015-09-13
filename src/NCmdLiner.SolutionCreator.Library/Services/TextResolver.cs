@@ -10,7 +10,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         private readonly int _sLenth;
         private readonly int _eLenth;
         private readonly Regex _regEx;
-        private Regex _guidRegEx;
+        private readonly Regex _guidRegEx;
 
         public TextResolver(IContext context, ILog logger)
         {
