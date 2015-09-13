@@ -1,0 +1,3 @@
+[submodule "src/NCmdLiner.SolutionTemplates"]
+	path = src/NCmdLiner.SolutionTemplates
+	url = https://github.com/trondr/NCmdLiner.SolutionTemplates.git
