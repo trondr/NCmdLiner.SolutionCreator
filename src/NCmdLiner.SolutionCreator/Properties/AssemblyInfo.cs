@@ -16,12 +16,12 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("NCmdLiner.SolutionCreator creates a new solution by resolving a selected default " +
     "or user defined template solution.")]
-[assembly: AssemblyCompany("github.com/trondr")]
+[assembly: AssemblyCompany("github.com.trondr")]
 [assembly: AssemblyProduct("NCmdLiner.SolutionCreator")]
 [assembly: AssemblyCopyright("Copyright © <github.com/trondr> 2015")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyInformationalVersion("1.0.15256.")]
-[assembly: AssemblyVersion("1.0.15256.32")]
-[assembly: AssemblyFileVersion("1.0.15256.32")]
+[assembly: AssemblyInformationalVersion("1.0.15302.")]
+[assembly: AssemblyVersion("1.0.15302.33")]
+[assembly: AssemblyFileVersion("1.0.15302.33")]
 
 

@@ -5,7 +5,7 @@
   
   <PropertyGroup>    
     <ProductName>NCmdLiner.SolutionCreator</ProductName>
-    <ProductCompany>github.com/trondr</ProductCompany>
+    <ProductCompany>github.com.trondr</ProductCompany>
     <ProductDescription>NCmdLiner.SolutionCreator creates a new solution by resolving a selected default or user defined template solution.</ProductDescription>
     <ProductCopyright>Copyright &#169; &lt;github.com/trondr&gt; $([System.DateTime]::Now.Year)</ProductCopyright>
     <ProductProjectName>$(ProductName)</ProductProjectName>
