@@ -21,7 +21,7 @@
     <SrcDirectory>$(MSBuildProjectDirectory)\src</SrcDirectory>
     <ToolsDirectory>$(MSBuildProjectDirectory)\tools</ToolsDirectory>
   
-    <NunitVersion>2.6.3</NunitVersion>
+    <NunitVersion>2.6.4</NunitVersion>
     
   </PropertyGroup>
   

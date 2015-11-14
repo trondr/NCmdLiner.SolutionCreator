@@ -6,19 +6,19 @@ using NCmdLiner.SolutionCreator.Library.Common;
 
 namespace NCmdLiner.SolutionCreator
 {
-    class Program
+    internal class Program
     {
         [STAThread]
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
             var returnValue = 0;
             try
             {
-                var logger = LogManager.GetCurrentClassLogger();
+                var logger = LogManager.GetLogger<Program>();
                 var applicationInfo = BootStrapper.Container.Resolve<IApplicationInfo>();
                 try
                 {
-                    applicationInfo.Authors = @"<github.com\trondr>";
+                    applicationInfo.Authors = @"github.com.trondr";
                     // ReSharper disable once CoVariantArrayConversion
                     object[] commandTargets = BootStrapper.Container.ResolveAll<CommandsBase>();
                     logger.InfoFormat("Start: {0} ({1}). Command line: {2}", applicationInfo.Name, applicationInfo.Version, Environment.CommandLine);
