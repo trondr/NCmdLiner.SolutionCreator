@@ -40,6 +40,15 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Register(Component.For<MainView>().Activator<StrictComponentActivator>());
             container.Register(Component.For<MainViewModel>().Activator<StrictComponentActivator>());
 
+            container.Register(Component.For<ISelectSolutionTemplateWindowFactory>().AsFactory());
+            container.Register(
+                Component.For<SelectSolutionTemplateWindow>()
+                    .ImplementedBy<SelectSolutionTemplateWindow>()
+                    .Named(typeof(SelectSolutionTemplateWindow).Name)
+                    .LifeStyle.Transient);
+            container.Register(Component.For<SelectSolutionTemplateView>().Activator<StrictComponentActivator>());
+            container.Register(Component.For<SelectSolutionTemplateViewModel>().Activator<StrictComponentActivator>());
+
             //Factory registrations example:
 
             //container.Register(Component.For<ITeamProviderFactory>().AsFactory());
@@ -56,7 +65,7 @@ namespace NCmdLiner.SolutionCreator.BootStrap
 
             //Automatic registrations
 
-            container.Register(Classes.FromAssemblyInThisApplication().BasedOn<CommandsBase>().WithServiceBase());
+            container.Register(Classes.FromAssemblyInThisApplication().BasedOn<CommandDefinition>().WithServiceBase());
 
             var libraryRootNameSpace = applicationRootNameSpace + ".Library";
 

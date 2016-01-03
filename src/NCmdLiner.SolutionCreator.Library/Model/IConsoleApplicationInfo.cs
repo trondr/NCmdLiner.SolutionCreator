@@ -1,6 +1,6 @@
 ﻿namespace NCmdLiner.SolutionCreator.Library.Model
 {
-    public interface ISolutionInfo
+    public interface IConsoleApplicationInfo
     {
         string CompanyName { get; set; }
         string NamespaceCompanyName { get; set; }
@@ -13,6 +13,5 @@
         string SetupProjectName { get; set; }
         string ScriptInstallProjectName { get; set; }
         string Authors { get; set; }
-
     }
 }

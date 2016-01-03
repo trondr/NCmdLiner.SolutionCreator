@@ -6,18 +6,18 @@ using NCmdLiner.SolutionCreator.Library.Model;
 
 namespace NCmdLiner.SolutionCreator.Library.Services
 {
-    public class TemplateProvider : ITemplateProvider
+    public class SolutionTemplateProvider : ISolutionTemplateProvider
     {
         private readonly IConfiguration _configuration;
         private readonly ILog _logger;
 
-        public TemplateProvider(IConfiguration configuration, ILog logger)
+        public SolutionTemplateProvider(IConfiguration configuration, ILog logger)
         {
             _configuration = configuration;
             _logger = logger;
         }
 
-        public IEnumerable<Template> Templates
+        public IEnumerable<SolutionTemplate> SolutionTemplates
         {
             get
             {
@@ -31,7 +31,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
                             _logger.Debug("Template folder exists: " + templateDirectoryInfo.FullName);
                             foreach (var subDirectory in templateDirectoryInfo.GetDirectories())
                             {
-                                yield return new Template() {Name = subDirectory.Name, Path = subDirectory.FullName};
+                                yield return new SolutionTemplate() {Name = subDirectory.Name, Path = subDirectory.FullName};
                             }                            
                         }
                         else
@@ -50,6 +50,6 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             }
             set { _templates = value; }
         }
-        private IEnumerable<Template> _templates;
+        private IEnumerable<SolutionTemplate> _templates;
     }
 }

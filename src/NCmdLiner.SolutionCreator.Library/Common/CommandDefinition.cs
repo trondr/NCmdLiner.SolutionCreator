@@ -1,6 +1,6 @@
 ﻿namespace NCmdLiner.SolutionCreator.Library.Common
 {
-    public abstract class CommandsBase
+    public abstract class CommandDefinition
     {
 
     }

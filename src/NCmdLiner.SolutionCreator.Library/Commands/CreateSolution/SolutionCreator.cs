@@ -18,26 +18,26 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
         private readonly MainWindow _mainWindow;
         private readonly IContext _context;
         private readonly IFolderResolver _folderResolver;
-        private readonly ITemplateProvider _templateProvider;
+        private readonly ISolutionTemplateProvider _solutionTemplateProvider;
         private readonly ILog _logger;
 
-        public SolutionCreator(MainWindow mainWindow, IContext context, IFolderResolver folderResolver, ITemplateProvider templateProvider, ILog logger)
+        public SolutionCreator(MainWindow mainWindow, IContext context, IFolderResolver folderResolver, ISolutionTemplateProvider solutionTemplateProvider, ILog logger)
         {
             _mainWindow = mainWindow;
             _context = context;
             _folderResolver = folderResolver;
-            _templateProvider = templateProvider;
+            _solutionTemplateProvider = solutionTemplateProvider;
             _logger = logger;
-            Mapper.CreateMap<ISolutionInfo, IMainViewModel>();
+            Mapper.CreateMap<IConsoleApplicationInfo, IMainViewModel>();
         }
         
-        public int Create(string targetRootFolder, ISolutionInfo solutionInfo)
+        public int Create(string targetRootFolder, IConsoleApplicationInfo consoleApplicationInfo)
         {
             var returnValue = 0;
             _logger.Info("Getting basic info from the user");
             var application = new System.Windows.Application();
             var viewModel = _mainWindow.View.ViewModel as MainViewModel;
-            Mapper.Map(solutionInfo, viewModel);
+            Mapper.Map(consoleApplicationInfo, viewModel);
             application.Run(_mainWindow);
             
             if (viewModel != null)
@@ -66,7 +66,7 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
                     var targetSolutionFolder = Path.Combine(targetRootFolder, viewModel.ShortProductName);
                     if (!Directory.Exists(targetSolutionFolder))
                     {
-                        var templates = _templateProvider.Templates.ToList();
+                        var templates = _solutionTemplateProvider.SolutionTemplates.ToList();
                         _logger.Debug("Found number of templates: " + templates.Count);
                         if (templates.Count > 0)
                         {

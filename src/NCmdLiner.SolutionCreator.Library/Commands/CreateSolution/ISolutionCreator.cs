@@ -4,6 +4,6 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
 {
     public interface ISolutionCreator
     {
-        int Create(string targetRootFolder, ISolutionInfo solutionInfo);
+        int Create(string targetRootFolder, IConsoleApplicationInfo consoleApplicationInfo);
     }
 }

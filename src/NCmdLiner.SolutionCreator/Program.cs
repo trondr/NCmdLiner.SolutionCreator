@@ -20,7 +20,7 @@ namespace NCmdLiner.SolutionCreator
                 {
                     applicationInfo.Authors = @"github.com.trondr";
                     // ReSharper disable once CoVariantArrayConversion
-                    object[] commandTargets = BootStrapper.Container.ResolveAll<CommandsBase>();
+                    object[] commandTargets = BootStrapper.Container.ResolveAll<CommandDefinition>();
                     logger.InfoFormat("Start: {0} ({1}). Command line: {2}", applicationInfo.Name, applicationInfo.Version, Environment.CommandLine);
                     return CmdLinery.Run(commandTargets, args, applicationInfo, new NotepadMessenger());
                 }

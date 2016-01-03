@@ -7,9 +7,10 @@ namespace NCmdLiner.SolutionCreator.Library.Views
     /// </summary>
     public partial class MainView : ViewBase
     {
-        public MainView(MainViewModel viewModel)
-        {
-            this.ViewModel = viewModel;
+        public MainViewModel ViewModel { get; set; }
+
+        public MainView()
+        {            
             InitializeComponent();
         }
     }

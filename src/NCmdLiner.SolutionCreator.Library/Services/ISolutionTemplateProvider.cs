@@ -3,8 +3,8 @@ using NCmdLiner.SolutionCreator.Library.Model;
 
 namespace NCmdLiner.SolutionCreator.Library.Services
 {
-    public interface ITemplateProvider
+    public interface ISolutionTemplateProvider
     {
-        IEnumerable<Template> Templates { get; set; }
+        IEnumerable<SolutionTemplate> SolutionTemplates { get; set; }
     }
 }

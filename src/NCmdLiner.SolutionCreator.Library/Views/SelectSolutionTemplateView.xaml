@@ -1,0 +1,38 @@
+﻿<views:ViewBase x:Class="NCmdLiner.SolutionCreator.Library.Views.SelectSolutionTemplateView"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:NCmdLiner.SolutionCreator.Library.Views"
+             xmlns:viewModels="clr-namespace:NCmdLiner.SolutionCreator.Library.ViewModels"
+             xmlns:diag ="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             mc:Ignorable="d" d:DesignWidth="500" >
+    <DockPanel d:DataContext="{d:DesignInstance Type=viewModels:DesignTimeSelectSolutionTemplateViewModel, IsDesignTimeCreatable=True}" Margin="5" >
+        <DockPanel Dock="Top">
+            <Label Content="{Binding SelectSolutionTemplateLabel}" VerticalAlignment="Top"/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Content="OK" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>
+            <Label Content="{Binding ApplicationInfo}" Foreground="DarkGray" HorizontalAlignment="Center"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
+        </DockPanel>
+
+        <DockPanel>
+
+            <ListView DataContext="{Binding SolutionTemplates}" ItemsSource="{Binding}" SelectionMode="Single" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView x:Name="_solutionTemplateGridView">
+                        <GridViewColumn Width="Auto" Header="Solution Template" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                        <GridViewColumn Width="Auto" Header="Template Path" DisplayMemberBinding="{Binding Path}"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+
+    </DockPanel>
+</views:ViewBase>

@@ -1,6 +1,6 @@
 ﻿namespace NCmdLiner.SolutionCreator.Library.Model
 {
-    public class Template
+    public class SolutionTemplate
     {
         public string Name { get; set; }
 

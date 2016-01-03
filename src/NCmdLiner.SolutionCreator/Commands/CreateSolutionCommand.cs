@@ -6,7 +6,7 @@ using NCmdLiner.SolutionCreator.Library.Model;
 
 namespace NCmdLiner.SolutionCreator.Commands
 {
-    public class CreateSolutionCommand: CommandsBase
+    public class CreateSolutionCommand: CommandDefinition
     {
         private readonly ISolutionCreator _solutionCreator;
         private readonly ILog _logger;
@@ -25,8 +25,8 @@ namespace NCmdLiner.SolutionCreator.Commands
         {
             var returnValue = 0;
             _logger.Info("Start CreateSolution...");
-            ISolutionInfo solutionInfo = new SolutionInfo();
-            returnValue = _solutionCreator.Create(targetRootFolder, solutionInfo);
+            IConsoleApplicationInfo consoleApplicationInfo = new ConsoleApplicationInfo();
+            returnValue = _solutionCreator.Create(targetRootFolder, consoleApplicationInfo);
             _logger.Info("End CreateSolution.");
             return returnValue;
         }

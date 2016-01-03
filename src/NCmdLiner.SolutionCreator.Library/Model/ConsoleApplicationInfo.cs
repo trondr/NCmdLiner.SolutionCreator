@@ -1,8 +1,8 @@
 ﻿namespace NCmdLiner.SolutionCreator.Library.Model
 {
-    public class SolutionInfo : ISolutionInfo
+    public class ConsoleApplicationInfo : IConsoleApplicationInfo
     {
-        public SolutionInfo()
+        public ConsoleApplicationInfo()
         {
             CompanyName = "My Company AS";
             NamespaceCompanyName = "MyCompany";
