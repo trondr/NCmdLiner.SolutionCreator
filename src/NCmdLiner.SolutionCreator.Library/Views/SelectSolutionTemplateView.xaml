@@ -12,17 +12,17 @@
             <Label Content="{Binding SelectSolutionTemplateLabel}" VerticalAlignment="Top"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
-            <Button Content="OK" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>
-            <Label Content="{Binding ApplicationInfo}" Foreground="DarkGray" HorizontalAlignment="Center"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
+            <Button Content="OK" Command="{Binding OkCommand}" HorizontalAlignment="Right" Margin="2"/>
+            <Label Content="{Binding ApplicationInfo}" Foreground="DarkGray" HorizontalAlignment="Center"  Margin="2"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"  Margin="2"/>
         </DockPanel>
 
         <DockPanel>
-
+            
             <ListView DataContext="{Binding SolutionTemplates}" ItemsSource="{Binding}" SelectionMode="Single" >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"></Setter>
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.View>

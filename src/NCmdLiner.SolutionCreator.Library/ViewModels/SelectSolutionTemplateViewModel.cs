@@ -15,8 +15,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
     public class SelectSolutionTemplateViewModel : DependencyObject, ISelectSolutionTemplateViewModel
     {
         private readonly ILog _logger;
-        private DispatcherTimer _commandUpdateTimer;
-
+        
         public SelectSolutionTemplateViewModel(ISolutionCreatorApplicationInfo solutionCreatorApplicationInfo, ILog logger)
         {
             _logger = logger;
@@ -25,20 +24,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             ApplicationInfo = solutionCreatorApplicationInfo.Name + " " + solutionCreatorApplicationInfo.Version;
             SelectSolutionTemplateLabel = "Select Solution Template:";
             OkCommand = new AsyncCommand(Ok,() => !IsBusy && SelectedSolutionTemplate != null);
-            CancelCommand = new AsyncCommand(Cancel,() => !IsBusy);
-            _commandUpdateTimer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 1)};
-            _commandUpdateTimer.Tick += UpdateCommands;
-            _commandUpdateTimer.Start();
-        }
-
-        ~SelectSolutionTemplateViewModel()
-        {
-            _commandUpdateTimer.Stop();
-        }
-
-        private void UpdateCommands(object sender, EventArgs e)
-        {
-            CommandManager.InvalidateRequerySuggested();
+            CancelCommand = new AsyncCommand(Cancel,() => !IsBusy);            
         }
 
         private void SolutionTemplatesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

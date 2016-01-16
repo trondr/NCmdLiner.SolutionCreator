@@ -39,7 +39,6 @@ namespace NCmdLiner.SolutionCreator.Library.Common.UI
         public async void Execute(object parameter)
         {
             _isExecuting = true;
-            OnCanExecuteChanged();
             try
             {
                 await _execute();
@@ -47,15 +46,14 @@ namespace NCmdLiner.SolutionCreator.Library.Common.UI
             finally
             {
                 _isExecuting = false;
-                OnCanExecuteChanged();
+                CommandManager.InvalidateRequerySuggested();
             }            
         }
 
-        public event EventHandler CanExecuteChanged;
-        
-        protected virtual void OnCanExecuteChanged()
-        {            
-            EventsHelper.Fire(() => CanExecuteChanged(this,new EventArgs()));            
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
     }
 }
