@@ -7,5 +7,5 @@
         string Path {get;set; }
 
         bool IsSelected { get; set; }
-    }
+    }    
 }

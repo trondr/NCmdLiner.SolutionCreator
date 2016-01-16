@@ -14,7 +14,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
     public class ResolveFileTests
     {
         private ILog _logger;
-        private IContext _stubContext;
+        private IResolveContext _stubResolveContext;
         private string _sourceTestFile;
         private FileEncoding _fileEncoding;
         private TextResolver _textResolver;
@@ -26,12 +26,12 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         public void SetUp()
         {
             _logger = new ConsoleOutLogger(this.GetType().Name, LogLevel.All, true, false, false, "yyyy-MM-dd hh:mm:ss");
-            _stubContext = MockRepository.GenerateStub<IContext>();
-            _stubContext.Stub(context => context.GetVariable("ConsoleProjectName")).Return("My.Football.Manager");
-            _stubContext.Stub(context => context.GetVariable("LibraryProjectName")).Return("My.Football.Manager.Library");
-            _stubContext.Stub(context => context.GetVariable("ProjectDescription")).Return("application for management of football teams.");
+            _stubResolveContext = MockRepository.GenerateStub<IResolveContext>();
+            _stubResolveContext.Stub(context => context.GetVariable("ConsoleProjectName")).Return("My.Football.Manager");
+            _stubResolveContext.Stub(context => context.GetVariable("LibraryProjectName")).Return("My.Football.Manager.Library");
+            _stubResolveContext.Stub(context => context.GetVariable("ProjectDescription")).Return("application for management of football teams.");
             _fileEncoding = new FileEncoding();
-            _textResolver = new TextResolver(_stubContext, _logger);
+            _textResolver = new TextResolver(_stubResolveContext, _logger);
             _sourceTestFile = Path.GetTempFileName();
             _targetTestFile = Path.GetTempFileName();
             if (File.Exists(_sourceTestFile))

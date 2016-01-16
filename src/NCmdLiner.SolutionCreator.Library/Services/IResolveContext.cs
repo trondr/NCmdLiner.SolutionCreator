@@ -1,6 +1,6 @@
 ﻿namespace NCmdLiner.SolutionCreator.Library.Services
 {
-    public interface IContext
+    public interface IResolveContext
     {
         void AddVariable(string name, string value);
 

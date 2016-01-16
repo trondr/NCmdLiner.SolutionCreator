@@ -8,12 +8,12 @@ namespace NCmdLiner.SolutionCreator.Commands
 {
     public class CreateSolutionCommand: CommandDefinition
     {
-        private readonly ISolutionCreator _solutionCreator;
+        private readonly ISolutionCreatorCommandProvider _solutionCreatorCommandProvider;
         private readonly ILog _logger;
 
-        public CreateSolutionCommand(ISolutionCreator solutionCreator, ILog logger)
+        public CreateSolutionCommand(ISolutionCreatorCommandProvider solutionCreatorCommandProvider, ILog logger)
         {
-            _solutionCreator = solutionCreator;
+            _solutionCreatorCommandProvider = solutionCreatorCommandProvider;
             _logger = logger;
         }
 
@@ -26,7 +26,7 @@ namespace NCmdLiner.SolutionCreator.Commands
             var returnValue = 0;
             _logger.Info("Start CreateSolution...");
             IConsoleApplicationInfo consoleApplicationInfo = new ConsoleApplicationInfo();
-            returnValue = _solutionCreator.Create(targetRootFolder, consoleApplicationInfo);
+            returnValue = _solutionCreatorCommandProvider.CreateSolution(targetRootFolder, consoleApplicationInfo);
             _logger.Info("End CreateSolution.");
             return returnValue;
         }

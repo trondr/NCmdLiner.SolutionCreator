@@ -7,12 +7,12 @@ using NCmdLiner.SolutionCreator.Library.Common;
 namespace NCmdLiner.SolutionCreator.Library.Services
 {
     [Singleton]
-    public class Context : IContext
+    public class ResolveContext : IResolveContext
     {
         private readonly IGuidGeneator _guidGeneator;
         private readonly ILog _logger;
 
-        public Context(IGuidGeneator guidGeneator,ILog logger)
+        public ResolveContext(IGuidGeneator guidGeneator,ILog logger)
         {
             _guidGeneator = guidGeneator;
             _logger = logger;

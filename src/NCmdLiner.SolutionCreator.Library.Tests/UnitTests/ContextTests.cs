@@ -40,7 +40,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _stubGuidGenerator = MockRepository.GenerateStub<IGuidGeneator>();
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Repeat.Never();
 
-            var target = new Context(_stubGuidGenerator, _logger);
+            var target = new ResolveContext(_stubGuidGenerator, _logger);
             const string variableName = "SomeVariableName";
             const string expected = "SomeValue";
             var actual = target.GetVariable(variableName);
@@ -59,7 +59,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Return(_guid2).Repeat.Once();
             
 
-            var target = new Context(_stubGuidGenerator, _logger);
+            var target = new ResolveContext(_stubGuidGenerator, _logger);
             var actual = target.GetVariable("Guid1");
             var expected = _guid1;
             Assert.AreEqual(expected, actual);
@@ -80,7 +80,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _stubGuidGenerator = MockRepository.GenerateStub<IGuidGeneator>();
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Repeat.Never();
             
-            var target = new Context(_stubGuidGenerator, _logger);
+            var target = new ResolveContext(_stubGuidGenerator, _logger);
             var actual = target.GetVariable("Guidd1");
             string expected = null;
             Assert.AreEqual(expected, actual);
@@ -101,7 +101,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _stubGuidGenerator = MockRepository.GenerateStub<IGuidGeneator>();
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Repeat.Never();
 
-            var target = new Context(_stubGuidGenerator, _logger);
+            var target = new ResolveContext(_stubGuidGenerator, _logger);
             var actual = target.GetVariable("guid1");
             string expected = null;
             Assert.AreEqual(expected, actual);
@@ -122,7 +122,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             _stubGuidGenerator = MockRepository.GenerateStub<IGuidGeneator>();
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Return(_guid1).Repeat.Once();
             _stubGuidGenerator.Stub(geneator => geneator.GetNewGuid()).Return(_guid2).Repeat.Once();
-            var target = new Context(_stubGuidGenerator, _logger);
+            var target = new ResolveContext(_stubGuidGenerator, _logger);
             const string variableName = "ECD7A685-EDCC-474C-AD38-000000000001";
             var expected = _guid1;
             var actual = target.GetVariable(variableName);

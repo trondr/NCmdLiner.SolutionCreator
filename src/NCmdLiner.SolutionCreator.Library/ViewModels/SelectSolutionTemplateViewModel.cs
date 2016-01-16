@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Common.Logging;
 using NCmdLiner.SolutionCreator.Library.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common.UI;
@@ -79,9 +78,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
 
         public static readonly DependencyProperty SelectSolutionTemplateLabelProperty = DependencyProperty.Register(
             "SelectSolutionTemplateLabel", typeof (string), typeof (SelectSolutionTemplateViewModel), new PropertyMetadata(default(string)));
-
-        private ObservableCollection<SolutionTemplateViewModel> _solutionTemplates;
-
+        
         public string SelectSolutionTemplateLabel
         {
             get { return (string) GetValue(SelectSolutionTemplateLabelProperty); }

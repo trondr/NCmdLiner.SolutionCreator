@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\StrictComponentActivator.cs" />
     <Compile Include="Infrastructure\CustomTypeFactoryComponentSelector.cs" />
+    <Compile Include="ManualTests\SolutionInfoWindowTests.cs" />
     <Compile Include="ManualTests\TestSelectSolutionTemplateWindow.cs" />
     <Compile Include="ManualTests\UnitTestsTemplate.cs" />
     <Compile Include="TestData.cs" />

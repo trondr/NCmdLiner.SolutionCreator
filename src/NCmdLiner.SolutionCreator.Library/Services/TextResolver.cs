@@ -5,16 +5,16 @@ namespace NCmdLiner.SolutionCreator.Library.Services
 {
     public class TextResolver : ITextResolver
     {
-        private readonly IContext _context;
+        private readonly IResolveContext _resolveContext;
         private readonly ILog _logger;
         private readonly int _sLenth;
         private readonly int _eLenth;
         private readonly Regex _regEx;
         private readonly Regex _guidRegEx;
 
-        public TextResolver(IContext context, ILog logger)
+        public TextResolver(IResolveContext resolveContext, ILog logger)
         {
-            _context = context;
+            _resolveContext = resolveContext;
             _logger = logger;
             VariableStartString = "_S_";
             VariableEndString = "_S_";
@@ -38,14 +38,14 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         {
             var cv = match.Value;
             var variableName = cv.Substring(_sLenth, cv.Length - _sLenth - _eLenth);
-            var variableValue = _context.GetVariable(variableName) ?? VariableStartString + variableName + VariableEndString;
+            var variableValue = _resolveContext.GetVariable(variableName) ?? VariableStartString + variableName + VariableEndString;
             return variableValue;
         }
 
         private string ReplaceGuidContextVariable(Match match)
         {            
             var variableName = match.Value;
-            var variableValue = _context.GetVariable(variableName) ?? variableName;
+            var variableValue = _resolveContext.GetVariable(variableName) ?? variableName;
             return variableValue;
         }
 
