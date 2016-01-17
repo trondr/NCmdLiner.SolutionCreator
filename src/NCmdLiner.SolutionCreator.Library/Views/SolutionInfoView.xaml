@@ -31,16 +31,13 @@
                         <GridViewColumn Width="300" Header="Value" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Label></Label>
-                                        <TextBox Name="_atributeValueTextBox"  Text="{Binding Path=Value}" HorizontalAlignment="Stretch" TextAlignment="Left" Width="Auto" />
-                                    </StackPanel>
+                                    <TextBox Name="_attributeValueTextBox"  Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" TextAlignment="Left" Width="Auto" />
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding Path=IsFilledOut}" Value="true">
-                                            <Setter TargetName="_atributeValueTextBox" Property="Background" Value="White"/>
+                                            <Setter TargetName="_attributeValueTextBox" Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowTextColorKey}}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=IsFilledOut}" Value="false">
-                                            <Setter TargetName="_atributeValueTextBox" Property="Background" Value="LightPink"/>
+                                            <Setter TargetName="_attributeValueTextBox" Property="Background" Value="LightPink"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>

@@ -18,26 +18,26 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         {
             _logger = logger;
             SolutionInfoAttributes = new ObservableCollection<SolutionInfoAttributeViewModel>();
-            SolutionInfoAttributes.CollectionChanged += SolutionInfoAttributes_CollectionChanged; ;            
+            SolutionInfoAttributes.CollectionChanged += SolutionInfoAttributes_CollectionChanged; ;
             ApplicationInfo = solutionCreatorApplicationInfo.Name + " " + solutionCreatorApplicationInfo.Version;
             SolutionInfoLabel = "Solution Attributes:";
-            OkCommand = new AsyncCommand(Ok,() => !IsBusy && AllAttributesAreFilledOut );
-            CancelCommand = new AsyncCommand(Cancel,() => !IsBusy);
+            OkCommand = new AsyncCommand(Ok, () => !IsBusy && AllAttributesAreFilledOut);
+            CancelCommand = new AsyncCommand(Cancel, () => !IsBusy);
         }
 
         private Task Ok()
         {
             return Task.Factory.StartNew(() => DispatchService.Invoke(() =>
-            {                
-                CloseWindowWithDialogResult(DialogResult.Ok);                
+            {
+                CloseWindowWithDialogResult(DialogResult.Ok);
             }));
         }
 
         private Task Cancel()
         {
             return Task.Factory.StartNew(() => DispatchService.Invoke(() =>
-            {                
-                CloseWindowWithDialogResult(DialogResult.Cancel);                
+            {
+                CloseWindowWithDialogResult(DialogResult.Cancel);
             }));
         }
 
@@ -57,7 +57,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             {
                 IsBusy = true;
                 if (CloseWindow != null)
-                {                    
+                {
                     CloseWindow(dialogResult);
                 }
                 else
@@ -65,7 +65,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
                     _logger.Error("CloseWindow action has not been set.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.ErrorFormat("Failed to close window. {0}{1}", Environment.NewLine, ex.ToString());
             }
@@ -76,11 +76,11 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         }
 
         public static readonly DependencyProperty SolutionInfoLabelProperty = DependencyProperty.Register(
-            "SolutionInfoLabel", typeof (string), typeof (SolutionInfoViewModel), new PropertyMetadata(default(string)));
+            "SolutionInfoLabel", typeof(string), typeof(SolutionInfoViewModel), new PropertyMetadata(default(string)));
 
         public string SolutionInfoLabel
         {
-            get { return (string) GetValue(SolutionInfoLabelProperty); }
+            get { return (string)GetValue(SolutionInfoLabelProperty); }
             set { SetValue(SolutionInfoLabelProperty, value); }
         }
 
@@ -88,11 +88,11 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         public ObservableCollection<SolutionInfoAttributeViewModel> SolutionInfoAttributes { get; set; }
 
         public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
-            "IsBusy", typeof (bool), typeof (SolutionInfoViewModel), new PropertyMetadata(default(bool)));
+            "IsBusy", typeof(bool), typeof(SolutionInfoViewModel), new PropertyMetadata(default(bool)));
 
         public bool IsBusy
         {
-            get { return (bool) GetValue(IsBusyProperty); }
+            get { return (bool)GetValue(IsBusyProperty); }
             set { SetValue(IsBusyProperty, value); }
         }
         public Action<bool> CloseWindow { get; set; }
@@ -101,11 +101,11 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         public ICommand CancelCommand { get; set; }
 
         public static readonly DependencyProperty ApplicationInfoProperty = DependencyProperty.Register(
-            "ApplicationInfo", typeof (string), typeof (SolutionInfoViewModel), new PropertyMetadata(default(string)));
+            "ApplicationInfo", typeof(string), typeof(SolutionInfoViewModel), new PropertyMetadata(default(string)));
 
         public string ApplicationInfo
         {
-            get { return (string) GetValue(ApplicationInfoProperty); }
+            get { return (string)GetValue(ApplicationInfoProperty); }
             set { SetValue(ApplicationInfoProperty, value); }
         }
 
