@@ -3,6 +3,7 @@ using System.IO;
 using Castle.Facilities.Logging;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Common.Logging;
@@ -49,19 +50,18 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Register(Component.For<SelectSolutionTemplateView>().Activator<StrictComponentActivator>());
             container.Register(Component.For<SelectSolutionTemplateViewModel>().Activator<StrictComponentActivator>());
 
-            //Factory registrations example:
+            container.Register(Component.For<ISolutionInfoWindowFactory>().AsFactory());
+                        container.Register(
+                            Component.For<SolutionInfoWindow>()
+                                .ImplementedBy<SolutionInfoWindow>()
+                                .Named(typeof(SolutionInfoWindow).Name)
+                                .LifeStyle.Transient);
+                        container.Register(Component.For<SolutionInfoView>().Activator<StrictComponentActivator>());
+                        container.Register(Component.For<SolutionInfoViewModel>().Activator<StrictComponentActivator>());
+            
+            container.Register(Classes.FromAssemblyInThisApplication().IncludeNonPublicTypes().BasedOn<ITypeMapperConfiguration>().WithService.FromInterface());
 
-            //container.Register(Component.For<ITeamProviderFactory>().AsFactory());
-            //container.Register(
-            //    Component.For<ITeamProvider>()
-            //        .ImplementedBy<CsvTeamProvider>()
-            //        .Named("CsvTeamProvider")
-            //        .LifeStyle.Transient);
-            //container.Register(
-            //    Component.For<ITeamProvider>()
-            //        .ImplementedBy<SqlTeamProvider>()
-            //        .Named("SqlTeamProvider")
-            //        .LifeStyle.Transient);
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
 
             //Automatic registrations
 

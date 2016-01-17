@@ -1,0 +1,5 @@
+﻿Help
+
+CreateSolution /targetRootFolder="C:\Dev\github\NCmdLiner.SolutionCreator\src\NCmdLiner.SolutionTemplates\Console Application"
+
+CreateSolution /targetRootFolder="C:\Dev\github\NCmdLiner.SolutionCreator\src\NCmdLiner.SolutionTemplates\Client Service Application"

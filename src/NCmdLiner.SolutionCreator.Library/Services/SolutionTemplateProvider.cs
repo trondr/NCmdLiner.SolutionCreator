@@ -17,39 +17,24 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             _logger = logger;
         }
 
-        public IEnumerable<SolutionTemplate> SolutionTemplates
+        public IEnumerable<SolutionTemplate> GetSolutionTemplates()
         {
-            get
+            foreach (var templateFolder in _configuration.TemplatesFolders)
             {
-                if (_templates == null)
+                var templateDirectoryInfo = new DirectoryInfo(templateFolder);
+                if (templateDirectoryInfo.Exists)
                 {
-                    foreach (var templateFolder in _configuration.TemplatesFolders)
+                    _logger.Debug("Template folder exists: " + templateDirectoryInfo.FullName);
+                    foreach (var subDirectory in templateDirectoryInfo.GetDirectories())
                     {
-                        var templateDirectoryInfo = new DirectoryInfo(templateFolder);
-                        if (templateDirectoryInfo.Exists)
-                        {
-                            _logger.Debug("Template folder exists: " + templateDirectoryInfo.FullName);
-                            foreach (var subDirectory in templateDirectoryInfo.GetDirectories())
-                            {
-                                yield return new SolutionTemplate() {Name = subDirectory.Name, Path = subDirectory.FullName};
-                            }                            
-                        }
-                        else
-                        {
-                            _logger.Debug("Template folder does NOT exist: " + templateDirectoryInfo.FullName);
-                        }
+                        yield return new SolutionTemplate() { Name = subDirectory.Name, Path = subDirectory.FullName };
                     }
                 }
                 else
                 {
-                    foreach (var template in _templates)
-                    {
-                        yield return template;
-                    }
-                }                
+                    _logger.Debug("Template folder does NOT exist: " + templateDirectoryInfo.FullName);
+                }
             }
-            set { _templates = value; }
-        }
-        private IEnumerable<SolutionTemplate> _templates;
+        }        
     }
 }

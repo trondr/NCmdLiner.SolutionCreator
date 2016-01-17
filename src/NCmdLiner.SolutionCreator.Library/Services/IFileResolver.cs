@@ -1,4 +1,6 @@
-﻿namespace NCmdLiner.SolutionCreator.Library.Services
+﻿using NCmdLiner.SolutionCreator.Library.ViewModels;
+
+namespace NCmdLiner.SolutionCreator.Library.Services
 {
     public interface IFileResolver
     {

@@ -81,6 +81,7 @@
     <Compile Include="UnitTests\ResolveTextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\TemplatePathTests.cs" />
+    <Compile Include="UnitTests\SolutionAttributeSeacherTests.cs" />
     <Compile Include="UnitTests\UnitTestsTemplate.cs" />
   </ItemGroup>
   <ItemGroup>

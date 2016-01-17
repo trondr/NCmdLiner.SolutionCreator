@@ -66,10 +66,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BootStrap\ITypeMapper.cs" />
+    <Compile Include="BootStrap\ITypeMapperConfiguration.cs" />
     <Compile Include="BootStrap\SolutionCreatorApplicationInfo.cs" />
     <Compile Include="BootStrap\ISolutionCreatorApplicationInfo.cs" />
     <Compile Include="BootStrap\IConfiguration.cs" />
     <Compile Include="BootStrap\Configuration.cs" />
+    <Compile Include="BootStrap\SolutionTemplateTypeMapperConfiguration.cs" />
+    <Compile Include="BootStrap\TypeMapper.cs" />
     <Compile Include="Commands\CreateSolution\IClientServiceApplicationSolutionCreator.cs" />
     <Compile Include="Commands\CreateSolution\ISolutionCreatorCommandProvider.cs" />
     <Compile Include="Common\CommandProvider.cs" />
@@ -85,9 +89,14 @@
     <Compile Include="Model\IClientServiceApplicationInfo.cs" />
     <Compile Include="Model\IConsoleApplicationInfo.cs" />
     <Compile Include="Model\ConsoleApplicationInfo.cs" />
+    <Compile Include="Services\ISolutionInfoAttributeProvider.cs" />
+    <Compile Include="Services\ISolutionAttributeSearcher.cs" />
     <Compile Include="Services\ITemplatePath.cs" />
     <Compile Include="Services\ISolutionTemplateProvider.cs" />
     <Compile Include="Commands\CreateSolution\SolutionCreatorCommandProvider.cs" />
+    <Compile Include="Services\SolutionInfoAttribute.cs" />
+    <Compile Include="Services\SolutionInfoAttributeProvider.cs" />
+    <Compile Include="Services\SolutionAttributeSearcher.cs" />
     <Compile Include="Services\TemplatePath.cs" />
     <Compile Include="Services\SolutionTemplateProvider.cs" />
     <Compile Include="Common\ApplicationInfoHelper.cs" />
