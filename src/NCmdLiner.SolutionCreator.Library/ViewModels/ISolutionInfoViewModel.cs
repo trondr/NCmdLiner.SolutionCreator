@@ -20,6 +20,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
 
         ICommand CancelCommand { get; set; }
 
-        string ApplicationInfo {get;set; }        
+        string ApplicationInfo {get;set; }
+
+        bool AllAttributesAreFilledOut { get; }
     }
 }

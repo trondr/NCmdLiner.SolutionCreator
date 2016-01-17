@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -20,9 +21,8 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             SolutionInfoAttributes.CollectionChanged += SolutionInfoAttributes_CollectionChanged; ;            
             ApplicationInfo = solutionCreatorApplicationInfo.Name + " " + solutionCreatorApplicationInfo.Version;
             SolutionInfoLabel = "Solution Attributes:";
-            OkCommand = new AsyncCommand(Ok,() => !IsBusy );
+            OkCommand = new AsyncCommand(Ok,() => !IsBusy && AllAttributesAreFilledOut );
             CancelCommand = new AsyncCommand(Cancel,() => !IsBusy);
-
         }
 
         private Task Ok()
@@ -74,14 +74,47 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
                 IsBusy = false;
             }
         }
-        
-        public string SolutionInfoLabel { get; set; }
+
+        public static readonly DependencyProperty SolutionInfoLabelProperty = DependencyProperty.Register(
+            "SolutionInfoLabel", typeof (string), typeof (SolutionInfoViewModel), new PropertyMetadata(default(string)));
+
+        public string SolutionInfoLabel
+        {
+            get { return (string) GetValue(SolutionInfoLabelProperty); }
+            set { SetValue(SolutionInfoLabelProperty, value); }
+        }
+
+
         public ObservableCollection<SolutionInfoAttributeViewModel> SolutionInfoAttributes { get; set; }
-        public bool IsBusy { get; set; }
+
+        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
+            "IsBusy", typeof (bool), typeof (SolutionInfoViewModel), new PropertyMetadata(default(bool)));
+
+        public bool IsBusy
+        {
+            get { return (bool) GetValue(IsBusyProperty); }
+            set { SetValue(IsBusyProperty, value); }
+        }
         public Action<bool> CloseWindow { get; set; }
         public Action UpdateView { get; set; }
         public ICommand OkCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        public string ApplicationInfo { get; set; }
+
+        public static readonly DependencyProperty ApplicationInfoProperty = DependencyProperty.Register(
+            "ApplicationInfo", typeof (string), typeof (SolutionInfoViewModel), new PropertyMetadata(default(string)));
+
+        public string ApplicationInfo
+        {
+            get { return (string) GetValue(ApplicationInfoProperty); }
+            set { SetValue(ApplicationInfoProperty, value); }
+        }
+
+        public bool AllAttributesAreFilledOut
+        {
+            get
+            {
+                return SolutionInfoAttributes.All(model => model.IsFilledOut);
+            }
+        }
     }
 }

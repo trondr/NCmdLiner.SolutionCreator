@@ -16,6 +16,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
                 new SolutionInfoAttributeViewModel() {Name="Library Project Name", Value = "MyProject.Library"},
                 new SolutionInfoAttributeViewModel() {Name="Setup Project Name", Value = "MyProject.Setup"}
             };
+            AllAttributesAreFilledOut =  false;
         }
 
         public string SolutionInfoLabel { get; set; }
@@ -26,5 +27,6 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         public ICommand OkCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public string ApplicationInfo { get; set; }
+        public bool AllAttributesAreFilledOut { get; private set; }
     }
 }
