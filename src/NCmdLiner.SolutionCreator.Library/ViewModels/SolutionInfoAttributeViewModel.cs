@@ -19,7 +19,14 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var viewModel = (SolutionInfoAttributeViewModel)dependencyObject;
-            viewModel.IsFilledOut = !string.IsNullOrWhiteSpace(dependencyPropertyChangedEventArgs.NewValue.ToString());
+            if (dependencyPropertyChangedEventArgs.NewValue != null)
+            {
+                viewModel.IsFilledOut = !string.IsNullOrWhiteSpace(dependencyPropertyChangedEventArgs.NewValue.ToString());
+            }
+            else
+            {
+                viewModel.IsFilledOut = false;
+            }            
         }
 
         public string Value

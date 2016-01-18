@@ -1,72 +1,36 @@
-using System;
-using System.Globalization;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Linq;
-using System.Windows;
-using AutoMapper;
-using Common.Logging;
-using NCmdLiner.SolutionCreator.Library.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common;
-using NCmdLiner.SolutionCreator.Library.Common.UI;
 using NCmdLiner.SolutionCreator.Library.Model;
-using NCmdLiner.SolutionCreator.Library.Services;
-using NCmdLiner.SolutionCreator.Library.ViewModels;
 using NCmdLiner.SolutionCreator.Library.Views;
 
 namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
 {
     public class SolutionCreatorCommandProvider : CommandProvider, ISolutionCreatorCommandProvider
     {
-        private readonly MainWindow _mainWindow;
-        private readonly IResolveContext _resolveContext;
-        private readonly IFolderResolver _folderResolver;
-        private readonly ISolutionTemplateProvider _solutionTemplateProvider;
-        private readonly ISelectSolutionTemplateWindowFactory _selectSolutionTemplateWindowFactory;
-        private readonly ISolutionInfoWindowFactory _solutionInfoWindowFactory;
-        private readonly ISolutionInfoAttributeProvider _solutionInfoAttributeProvider;
-        private readonly ITypeMapper _typeMapper;
-        private readonly ILog _logger;
+        private readonly ICreateSolutionApplication _createSolutionApplication;
 
-        public SolutionCreatorCommandProvider(MainWindow mainWindow, IResolveContext resolveContext, IFolderResolver folderResolver, ISolutionTemplateProvider solutionTemplateProvider, ISelectSolutionTemplateWindowFactory selectSolutionTemplateWindowFactory, ISolutionInfoWindowFactory solutionInfoWindowFactory,ISolutionInfoAttributeProvider solutionInfoAttributeProvider,ITypeMapper typeMapper, ILog logger)
+        public SolutionCreatorCommandProvider(ICreateSolutionApplication createSolutionApplication)
         {
-            _mainWindow = mainWindow;
-            _resolveContext = resolveContext;
-            _folderResolver = folderResolver;
-            _solutionTemplateProvider = solutionTemplateProvider;
-            _selectSolutionTemplateWindowFactory = selectSolutionTemplateWindowFactory;
-            _solutionInfoWindowFactory = solutionInfoWindowFactory;
-            _solutionInfoAttributeProvider = solutionInfoAttributeProvider;
-            _typeMapper = typeMapper;
-            _logger = logger;
-            //Mapper.CreateMap<IConsoleApplicationInfo, IMainViewModel>();
+            _createSolutionApplication = createSolutionApplication;
         }
 
         public int CreateSolution(string targetRootFolder, IConsoleApplicationInfo consoleApplicationInfo)
         {
             var returnValue = 0;
-            _logger.Info("Display select solution dialog to the user...");
-            var selectedTemplate = DisplaySelectSolutionDialogToTheUser();
-            if (selectedTemplate == null)
-            {
-                _logger.Warn("User canceled the operation of selecting solution template.");
-                return 0;
-            }
-            _logger.InfoFormat("User selected template: {0} ({1})", selectedTemplate.Name, selectedTemplate.Path);
+            _createSolutionApplication.InitializeAndRun(targetRootFolder);
+            return _createSolutionApplication.ExitCode;
 
-            _logger.Info("Getting basic info from the user");
-            var solutionInfoWindow = _solutionInfoWindowFactory.GetSolutionInfoWindow();
-            var view = solutionInfoWindow.View;
-            var viewModel = view.ViewModel;
-            var solutionInfoAttributes = _solutionInfoAttributeProvider.GetSolutionInfoAttributesFromTemplateFolder(selectedTemplate.Path);
-            foreach (var solutionInfoAttribute in solutionInfoAttributes)
-            {
-                viewModel.SolutionInfoAttributes.Add(_typeMapper.Map<SolutionInfoAttributeViewModel>(solutionInfoAttribute));
-            }
-            var application = new Application();
-            application.Run(solutionInfoWindow);
-            _logger.Info("Dialog result: " + solutionInfoWindow.DialogResult);
-            
+            //var solutionInfoWindow = _solutionInfoWindowFactory.GetSolutionInfoWindow();
+            //var view = solutionInfoWindow.View;
+            //var viewModel = view.ViewModel;
+            //var solutionInfoAttributes = _solutionInfoAttributeProvider.GetSolutionInfoAttributesFromTemplateFolder(selectedTemplate.Path);
+            //foreach (var solutionInfoAttribute in solutionInfoAttributes)
+            //{
+            //    viewModel.SolutionInfoAttributes.Add(_typeMapper.Map<SolutionInfoAttributeViewModel>(solutionInfoAttribute));
+            //}
+            //var application = new Application();
+            //var returnCode = application.Run(solutionInfoWindow);
+            //_logger.Info("Dialog result: " + returnCode);
+
             //application = new System.Windows.Application();
             //viewModel = _mainWindow.View.ViewModel as MainViewModel;
             //Mapper.Map(consoleApplicationInfo, viewModel);
@@ -133,35 +97,6 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
             return returnValue;
         }
 
-        private SolutionTemplate DisplaySelectSolutionDialogToTheUser()
-        {
-            SelectSolutionTemplateWindow window = null;
-            try
-            {
-                window = _selectSolutionTemplateWindowFactory.GetSelectSolutionTemplateWindow();
-                var view = window.View;
-                var viewModel = view.ViewModel;
-                foreach (var solutionTemplate in _solutionTemplateProvider.GetSolutionTemplates())
-                {
-                    viewModel.SolutionTemplates.Add(_typeMapper.Map<SolutionTemplateViewModel>(solutionTemplate));
-                }
-                var application = new Application();
-                application.Run(window);
-                return GetSelectedSolutionTemplate(window);
-            }
-            finally
-            {
-                _selectSolutionTemplateWindowFactory.Release(window);
-            }
-        }
-
-        private SolutionTemplate GetSelectedSolutionTemplate(SelectSolutionTemplateWindow window)
-        {
-            if (window.DialogResult != null && window.DialogResult.Value == DialogResult.Ok)
-            {
-                return _typeMapper.Map<SolutionTemplate>(window.View.ViewModel.SelectedSolutionTemplate);
-            }
-            return null;
-        }
+        
     }
 }

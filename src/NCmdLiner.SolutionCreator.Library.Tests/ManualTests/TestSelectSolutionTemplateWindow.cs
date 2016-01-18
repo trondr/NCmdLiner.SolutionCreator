@@ -66,14 +66,21 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.ManualTests
                 var stubTemplateProvider = testBooStrapper.Container.Resolve<ISolutionTemplateProvider>();
                 ////Prepare interface(s) that interface under test is dependent on by 
                 ////letting the dependent (stub) interface(s) return dummy data to the interface under test
-                stubTemplateProvider.SolutionTemplates = new List<SolutionTemplate>()
+
+                stubTemplateProvider.Stub(provider => provider.GetSolutionTemplates()).Return(new List<SolutionTemplate>()
                 {
                     new SolutionTemplate() {Name = "Console Application", Path = @"c:\temp\Templates\Console Application"},
                     new SolutionTemplate() {Name = "Client Service Application", Path = @"c:\temp\Templates\Client Service Application"},
-                };
+                }).Repeat.Any();
+
+                //stubTemplateProvider.SolutionTemplates = new List<SolutionTemplate>()
+                //{
+                //    new SolutionTemplate() {Name = "Console Application", Path = @"c:\temp\Templates\Console Application"},
+                //    new SolutionTemplate() {Name = "Client Service Application", Path = @"c:\temp\Templates\Client Service Application"},
+                //};
 
                 var actual = windowFactory.GetSelectSolutionTemplateWindow();
-                foreach (var solutionTemplate in stubTemplateProvider.SolutionTemplates)
+                foreach (var solutionTemplate in stubTemplateProvider.GetSolutionTemplates())
                 {
                     actual.View.ViewModel.SolutionTemplates.Add(new SolutionTemplateViewModel() { Name = solutionTemplate.Name, Path = solutionTemplate.Path });
                 }
