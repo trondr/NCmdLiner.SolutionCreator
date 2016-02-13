@@ -15,7 +15,7 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
 
         public int CreateSolution(string targetRootFolder, IConsoleApplicationInfo consoleApplicationInfo)
         {
-            var returnValue = 0;
+            //var returnValue = 0;
             _createSolutionApplication.InitializeAndRun(targetRootFolder);
             return _createSolutionApplication.ExitCode;
 
@@ -94,7 +94,7 @@ namespace NCmdLiner.SolutionCreator.Library.Commands.CreateSolution
             //    _logger.Fatal("Fatal error. View model returned from dialog was null");
             //    returnValue = 2;
             //}
-            return returnValue;
+            //return returnValue;
         }
 
         

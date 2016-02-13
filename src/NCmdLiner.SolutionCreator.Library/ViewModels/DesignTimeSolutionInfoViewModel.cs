@@ -12,9 +12,9 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             SolutionInfoLabel = "Fill out solution attributes:";
             SolutionInfoAttributes = new ObservableCollection<SolutionInfoAttributeViewModel>()
             {
-                new SolutionInfoAttributeViewModel() {Name="Console Project Name", Value = "MyProject"},
-                new SolutionInfoAttributeViewModel() {Name="Library Project Name", Value = "MyProject.Library"},
-                new SolutionInfoAttributeViewModel() {Name="Setup Project Name", Value = "MyProject.Setup"}
+                new SolutionInfoAttributeViewModel() {Name="_S_ConsoleProjectName_S_",DisplayName= "Console Project Name", Value = "MyProject"},
+                new SolutionInfoAttributeViewModel() {Name="_S_LibraryProjectName_S_",DisplayName="Library Project Name", Value = "MyProject.Library"},
+                new SolutionInfoAttributeViewModel() {Name="_S_SetupProjectName_S_",DisplayName="Setup Project Name", Value = "MyProject.Setup"}
             };
             AllAttributesAreFilledOut =  false;
         }

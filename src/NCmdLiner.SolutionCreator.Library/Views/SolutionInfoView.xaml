@@ -27,7 +27,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView x:Name="_solutionInfoAttributesGridView">
-                        <GridViewColumn Width="Auto" Header="Attribute" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Width="Auto" Header="Attribute" DisplayMemberBinding="{Binding DisplayName}"/>
                         <GridViewColumn Width="300" Header="Value" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

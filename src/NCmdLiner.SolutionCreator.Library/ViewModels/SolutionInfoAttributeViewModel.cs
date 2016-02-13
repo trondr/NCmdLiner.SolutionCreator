@@ -52,5 +52,14 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             get { return (bool) GetValue(IsFilledOutProperty); }
             set { SetValue(IsFilledOutProperty, value); }
         }
+
+        public static readonly DependencyProperty DisplayNameProperty = DependencyProperty.Register(
+            "DisplayName", typeof (string), typeof (SolutionInfoAttributeViewModel), new PropertyMetadata(default(string)));
+
+        public string DisplayName
+        {
+            get { return (string) GetValue(DisplayNameProperty); }
+            set { SetValue(DisplayNameProperty, value); }
+        }
     }
 }

@@ -81,6 +81,8 @@
     <Compile Include="Common\EventsHelper.cs" />
     <Compile Include="Common\GenericEventHandler.cs" />
     <Compile Include="Common\IEventsHelper.cs" />
+    <Compile Include="Common\IO\IIniFileOperation.cs" />
+    <Compile Include="Common\IO\IniFileOperation.cs" />
     <Compile Include="Common\UI\AsyncCommand.cs" />
     <Compile Include="Common\UI\DialogResult.cs" />
     <Compile Include="Common\UI\DispatchService.cs" />
@@ -90,11 +92,14 @@
     <Compile Include="Model\IClientServiceApplicationInfo.cs" />
     <Compile Include="Model\IConsoleApplicationInfo.cs" />
     <Compile Include="Model\ConsoleApplicationInfo.cs" />
+    <Compile Include="Services\ISolutionAttributeHelper.cs" />
+    <Compile Include="Services\ISolutionInfoAttributeFilesProvider.cs" />
     <Compile Include="Services\ISolutionInfoAttributeProvider.cs" />
     <Compile Include="Services\ISolutionAttributeSearcher.cs" />
     <Compile Include="Services\ITemplatePath.cs" />
     <Compile Include="Services\ISolutionTemplateProvider.cs" />
     <Compile Include="Commands\CreateSolution\SolutionCreatorCommandProvider.cs" />
+    <Compile Include="Services\SolutionAttributeHelper.cs" />
     <Compile Include="Services\SolutionInfoAttribute.cs" />
     <Compile Include="Services\SolutionInfoAttributeProvider.cs" />
     <Compile Include="Services\SolutionAttributeSearcher.cs" />
@@ -141,6 +146,7 @@
     <Compile Include="ViewModels\SolutionInfoViewModel.cs" />
     <Compile Include="ViewModels\SolutionTemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\CreateSolutionApplication.cs" />
     <Compile Include="Views\ICreateSolutionApplication.cs" />
     <Compile Include="Views\ISolutionInfoWindowFactory.cs" />
     <Compile Include="Views\MainView.xaml.cs">

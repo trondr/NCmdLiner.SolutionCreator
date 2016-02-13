@@ -72,6 +72,7 @@
     <Compile Include="Infrastructure\CustomTypeFactoryComponentSelector.cs" />
     <Compile Include="ManualTests\SolutionInfoWindowTests.cs" />
     <Compile Include="ManualTests\TestSelectSolutionTemplateWindow.cs" />
+    <Compile Include="ManualTests\CreateSolutionApplicationTests.cs" />
     <Compile Include="ManualTests\UnitTestsTemplate.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="UnitTests\ContextTests.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\TemplatePathTests.cs" />
     <Compile Include="UnitTests\SolutionAttributeSeacherTests.cs" />
+    <Compile Include="UnitTests\IniFileOperationTests.cs" />
     <Compile Include="UnitTests\UnitTestsTemplate.cs" />
   </ItemGroup>
   <ItemGroup>

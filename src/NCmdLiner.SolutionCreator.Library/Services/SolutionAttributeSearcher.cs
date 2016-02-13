@@ -5,6 +5,13 @@ namespace NCmdLiner.SolutionCreator.Library.Services
 {
     public class SolutionAttributeSearcher : ISolutionAttributeSearcher
     {
+        private readonly ISolutionAttributeHelper _solutionAttributeHelper;
+
+        public SolutionAttributeSearcher(ISolutionAttributeHelper solutionAttributeHelper)
+        {
+            _solutionAttributeHelper = solutionAttributeHelper;
+        }
+
         readonly Regex _attributeNameRegex = new Regex("(_S_.+?_S_)",RegexOptions.Compiled|RegexOptions.IgnoreCase);
         
         public IEnumerable<SolutionInfoAttribute> FindSolutionAttributesFromString(string text)
@@ -12,23 +19,8 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             var matches = _attributeNameRegex.Matches(text);
             foreach (Match match in matches)
             {
-               yield return GetSolutionInfoAttributeFromAttributeName(match.Value);
+               yield return _solutionAttributeHelper.GetSolutionInfoAttributeFromAttributeName(match.Value);
             }            
-        }
-
-        private SolutionInfoAttribute GetSolutionInfoAttributeFromAttributeName(string solutionInfoAttributeName)
-        {
-            return new SolutionInfoAttribute()
-            {
-                Name = solutionInfoAttributeName,
-                DisplayName = GetDisplayNameFromAttributeName(solutionInfoAttributeName)
-            };
-        }
-
-        private string GetDisplayNameFromAttributeName(string solutionInfoAttributeName)
-        {
-            var attributeNameBase = solutionInfoAttributeName.Replace("_S_","");
-            return Regex.Replace(attributeNameBase, "[a-z][A-Z]", m => m.Value[0] + " " + m.Value[1]);
         }
     }
 }
