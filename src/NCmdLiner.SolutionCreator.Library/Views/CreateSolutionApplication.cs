@@ -116,7 +116,9 @@ namespace NCmdLiner.SolutionCreator.Library.Views
                 foreach (var solutionInfoAttribute in solutionInfoAttributes)
                 {
                     _logger.Info(solutionInfoAttribute.Name);
-                    viewModel.SolutionInfoAttributes.Add(_typeMapper.Map<SolutionInfoAttributeViewModel>(solutionInfoAttribute));
+                    var solutionInfoAttributeViewModel = _typeMapper.Map<SolutionInfoAttributeViewModel>(solutionInfoAttribute);
+                    viewModel.SolutionInfoAttributes.Add(solutionInfoAttributeViewModel);
+                    solutionInfoAttributeViewModel.MemberOfSolutionInfoAttributes = viewModel.SolutionInfoAttributes;
                 }
                 window.Activate();
                 var dialogResult = window.ShowDialog();

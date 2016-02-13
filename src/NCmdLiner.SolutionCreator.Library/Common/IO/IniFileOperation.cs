@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -48,7 +49,8 @@ namespace NCmdLiner.SolutionCreator.Library.Common.IO
             var errorCode = Marshal.GetLastWin32Error();
             if (errorCode != 0)
             {
-                throw new Win32Exception(errorCode, string.Format("Failed to read keys from section '\"{0}\"[{1}]'", path, section));
+                var msg = string.Format("Failed to read keys from section '\"{0}\"[{1}]'", path, section);
+                throw new Exception(msg,new Win32Exception(errorCode));
             }
             return ByteBufferToStringArray(buffer);
         }
@@ -60,7 +62,8 @@ namespace NCmdLiner.SolutionCreator.Library.Common.IO
             var errorCode = Marshal.GetLastWin32Error();
             if (errorCode != 0)
             {
-                throw new Win32Exception(errorCode, string.Format("Failed to read sections from ini file '\"{0}\"'", path));
+                var msg = string.Format("Failed to read sections from ini file '\"{0}\"'", path);
+                throw new Exception(msg,new Win32Exception(errorCode));
             }            
             return ByteBufferToStringArray(buffer);
         }

@@ -40,7 +40,6 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.ManualTests
         {
             using(var testBooStrapper = new TestBootStrapper(GetType()))
             {
-
                 var solutionTemplateProviderStub = testBooStrapper.Container.Resolve<ISolutionTemplateProvider>();
                 solutionTemplateProviderStub.Stub(i => i.GetSolutionTemplates()).Return(new List<SolutionTemplate>()
                 {

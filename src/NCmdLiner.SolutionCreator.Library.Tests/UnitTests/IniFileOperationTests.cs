@@ -94,6 +94,21 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             return iniFile;
         }
 
+        private string CreateTestIniFileWin1000Sections()
+        {
+            var iniFile = Path.GetFullPath(Environment.ExpandEnvironmentVariables("%temp%\\testinifile.ini"));
+            using (var sw = new StreamWriter(iniFile, false))
+            {
+                sw.WriteLine("[TestSection1]");
+                sw.WriteLine("TestKey11=Testvalue11");
+                sw.WriteLine("");
+                sw.WriteLine("TestKey12=Testvalue12");
+                sw.WriteLine("TestKey13=Testvalue13");
+                
+            }
+            return iniFile;
+        }
+
         internal class TestBootStrapper : IDisposable
         {
             readonly ILog _logger;
