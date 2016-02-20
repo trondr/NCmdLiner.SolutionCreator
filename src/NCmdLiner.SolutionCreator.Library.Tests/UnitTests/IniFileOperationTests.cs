@@ -21,7 +21,10 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         public void SetUp()
         {
             _logger = new ConsoleOutLogger(this.GetType().Name, LogLevel.All, true, false, false, "yyyy-MM-dd hh:mm:ss");
-            _testIniFile = CreateTestIniFile();
+            if (File.Exists(_testIniFile))
+            {
+                File.Delete(_testIniFile);
+            }            
         }
 
         [TearDown]
@@ -36,7 +39,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         [Test]
         public void GetSectionsTest()
         {
-
+            _testIniFile = CreateTestIniFile();
             using (var testBooStrapper = new TestBootStrapper(GetType()))
             {
                 var target = testBooStrapper.Container.Resolve<IIniFileOperation>();
@@ -53,7 +56,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         [Test]
         public void GetSectionKeysTest()
         {
-
+            _testIniFile = CreateTestIniFile();
             using (var testBooStrapper = new TestBootStrapper(GetType()))
             {
                 var target = testBooStrapper.Container.Resolve<IIniFileOperation>();
@@ -64,6 +67,40 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
                 Assert.AreEqual("TestKey11", actual[0], "Section name not expected");
                 Assert.AreEqual("TestKey12", actual[1], "Section name not expected");
                 Assert.AreEqual("TestKey13", actual[2], "Section name not expected");
+            }
+        }
+
+        [Test]
+        public void Get1000SectionsTest()
+        {
+            _testIniFile = CreateTestIniFileWin1000Sections();
+            using (var testBooStrapper = new TestBootStrapper(GetType()))
+            {
+                var target = testBooStrapper.Container.Resolve<IIniFileOperation>();
+                
+                var actual = target.GetSections(_testIniFile).ToList();
+
+                Assert.AreEqual(1000, actual.Count, "Number of sections in ini file was not expected");
+                Assert.AreEqual("TestSection0", actual[0], "Section name not expected");
+                Assert.AreEqual("TestSection1", actual[1], "Section name not expected");
+                Assert.AreEqual("TestSection2", actual[2], "Section name not expected");
+            }
+        }
+
+        [Test]
+        public void Get1000KeysTest()
+        {
+            _testIniFile = CreateTestIniFileWin1000Keys();
+            using (var testBooStrapper = new TestBootStrapper(GetType()))
+            {
+                var target = testBooStrapper.Container.Resolve<IIniFileOperation>();
+
+                var actual = target.GetKeys(_testIniFile, "TestSection1").ToList();
+
+                Assert.AreEqual(1000, actual.Count, "Number of sections in ini file was not expected");
+                Assert.AreEqual("TestKey10", actual[0], "Section name not expected");
+                Assert.AreEqual("TestKey11", actual[1], "Section name not expected");
+                Assert.AreEqual("TestKey12", actual[2], "Section name not expected");
             }
         }
 
@@ -99,12 +136,29 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
             var iniFile = Path.GetFullPath(Environment.ExpandEnvironmentVariables("%temp%\\testinifile.ini"));
             using (var sw = new StreamWriter(iniFile, false))
             {
+                var maxNumberOfSections = 1000;
+                for (int i = 0; i < maxNumberOfSections; i++)
+                {
+                    sw.WriteLine("[TestSection{0}]",i);
+                    sw.WriteLine("TestKey{0}1=Testvalue{0}1",i);
+                    sw.WriteLine("");
+                }
+            }
+            return iniFile;
+        }
+
+        private string CreateTestIniFileWin1000Keys()
+        {
+            var iniFile = Path.GetFullPath(Environment.ExpandEnvironmentVariables("%temp%\\testinifile.ini"));
+            using (var sw = new StreamWriter(iniFile, false))
+            {
                 sw.WriteLine("[TestSection1]");
-                sw.WriteLine("TestKey11=Testvalue11");
-                sw.WriteLine("");
-                sw.WriteLine("TestKey12=Testvalue12");
-                sw.WriteLine("TestKey13=Testvalue13");
-                
+                var maxNumberOfKeys = 1000;
+                for (int i = 0; i < maxNumberOfKeys; i++)
+                {
+                    sw.WriteLine("TestKey1{0}=Testvalue1{0}",i);
+                    sw.WriteLine("");
+                }
             }
             return iniFile;
         }

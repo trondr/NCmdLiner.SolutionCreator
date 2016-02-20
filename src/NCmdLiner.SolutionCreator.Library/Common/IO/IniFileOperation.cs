@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -44,8 +45,9 @@ namespace NCmdLiner.SolutionCreator.Library.Common.IO
 
         public IEnumerable<string> GetKeys(string path, string section)
         {
-            var buffer = new byte[4096];
-            GetPrivateProfileString2(section, null, "", buffer, 255, path);
+            var bufferSize = GetBufferSize(path);
+            var buffer = new byte[bufferSize];
+            GetPrivateProfileString2(section, null, "", buffer, (int)bufferSize, path);
             var errorCode = Marshal.GetLastWin32Error();
             if (errorCode != 0)
             {
@@ -57,8 +59,9 @@ namespace NCmdLiner.SolutionCreator.Library.Common.IO
 
         public IEnumerable<string> GetSections(string path)
         {
-            var buffer = new byte[4096];
-            GetPrivateProfileString2(null, null, "", buffer, 255, path);
+            var bufferSize = GetBufferSize(path);
+            var buffer = new byte[bufferSize];
+            var size = GetPrivateProfileString2(null, null, "", buffer, (int)bufferSize, path);
             var errorCode = Marshal.GetLastWin32Error();
             if (errorCode != 0)
             {
@@ -71,6 +74,15 @@ namespace NCmdLiner.SolutionCreator.Library.Common.IO
         private string[] ByteBufferToStringArray(byte[] buffer)
         {
             return Encoding.ASCII.GetString(buffer).Trim('\0').Split('\0');
+        }
+
+        private long GetBufferSize(string path)
+        {
+            if(File.Exists(path))
+            {
+                return new FileInfo(path).Length;
+            }
+            throw new FileNotFoundException(path);
         }
     }
 }
