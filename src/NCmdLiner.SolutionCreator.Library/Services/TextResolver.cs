@@ -38,7 +38,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         {
             var cv = match.Value;
             var variableName = cv.Substring(_sLenth, cv.Length - _sLenth - _eLenth);
-            var variableValue = _resolveContext.GetVariable(variableName) ?? VariableStartString + variableName + VariableEndString;
+            var variableValue = _resolveContext.GetVariable(cv) ?? VariableStartString + variableName + VariableEndString;
             return variableValue;
         }
 

@@ -5,11 +5,11 @@ using System.Windows;
 using Common.Logging;
 using NCmdLiner.SolutionCreator.Library.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common.UI;
-using NCmdLiner.SolutionCreator.Library.Model;
 using NCmdLiner.SolutionCreator.Library.Services;
 using NCmdLiner.SolutionCreator.Library.ViewModels;
+using NCmdLiner.SolutionCreator.Library.Views;
 
-namespace NCmdLiner.SolutionCreator.Library.Views
+namespace NCmdLiner.SolutionCreator.Library.Model
 {
     public class CreateSolutionApplication : Application, ICreateSolutionApplication
     {
@@ -53,7 +53,7 @@ namespace NCmdLiner.SolutionCreator.Library.Views
             var createAction = FillInSolutionInfoAttributes(selectedSolutionTemplate);            
             if(createAction == CreateAction.DoCreateSolution)
             {
-                var targetSolutionFolder = Path.Combine(_targetRootFolder, _resolveContext.GetVariable("ShortProductName"));
+                var targetSolutionFolder = Path.Combine(_targetRootFolder, GetSolutionName());
                 if(Directory.Exists(targetSolutionFolder))
                 {
                     string msg = string.Format("Cannot create new solution. The target solution folder '{0}' allready exists.", targetSolutionFolder);
@@ -73,6 +73,16 @@ namespace NCmdLiner.SolutionCreator.Library.Views
             }      
             ExitCode = 0;      
             return;
+        }
+
+        private string GetSolutionName()
+        {
+            var solutionName = _resolveContext.GetVariable("_S_ShortProductName_S_");
+            if(solutionName == null)
+            {
+                throw new SolutionCreatorExceptions("Was not able to get solution name from short product name. Solution attribute _S_ShortProductName_S_ must be specified.");
+            }
+            return solutionName;
         }
 
         private SolutionTemplate SelectSolutionTemplate()
@@ -100,6 +110,7 @@ namespace NCmdLiner.SolutionCreator.Library.Views
             finally
             {
                 _selectSolutionTemplateWindowFactory.Release(window);
+                this.ShutdownMode = ShutdownMode.OnLastWindowClose;
             }            
         }
 
@@ -126,7 +137,7 @@ namespace NCmdLiner.SolutionCreator.Library.Views
                 {
                     TransferSolutionInfoIntoResolveContext(viewModel.SolutionInfoAttributes);
                     return CreateAction.DoCreateSolution;                    
-                }
+                }                
                 return CreateAction.DoNotCreateSolution;                    
 
             }

@@ -14,7 +14,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         private readonly IFileResolver _fileResolver;
         private readonly ILog _logger;
 
-        public FolderResolver(ITextResolver textResolver, IFileResolver fileResolver,ILog logger)
+        public FolderResolver(ITextResolver textResolver, IFileResolver fileResolver, ILog logger)
         {
             _textResolver = textResolver;
             _fileResolver = fileResolver;
@@ -22,9 +22,9 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         }
 
         public void Resolve(string sourceFolder, string targetFolder)
-        {            
-            if(!Directory.Exists(sourceFolder)) throw new DirectoryNotFoundException("Source folder not found: " + sourceFolder);
-            
+        {
+            if (!Directory.Exists(sourceFolder)) throw new DirectoryNotFoundException("Source folder not found: " + sourceFolder);
+
             var sourceDirectory = new DirectoryInfo(sourceFolder);
 
             var sourceDirectories = sourceDirectory.GetDirectories("*", SearchOption.AllDirectories).ToList();
@@ -38,7 +38,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             foreach (var sourceFile in sourceFiles)
             {
                 var targetFile = new FileInfo(_textResolver.Resolve(sourceFile.FullName.Replace(sourceFolder, targetFolder)));
-                _fileResolver.Resolve(sourceFile.FullName, targetFile.FullName);                
+                _fileResolver.Resolve(sourceFile.FullName, targetFile.FullName);
             }
         }
     }

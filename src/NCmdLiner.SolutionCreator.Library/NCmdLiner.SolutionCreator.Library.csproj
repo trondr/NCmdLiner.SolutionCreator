@@ -92,6 +92,8 @@
     <Compile Include="Model\IClientServiceApplicationInfo.cs" />
     <Compile Include="Model\IConsoleApplicationInfo.cs" />
     <Compile Include="Model\ConsoleApplicationInfo.cs" />
+    <Compile Include="Services\CheckFileExtentions.cs" />
+    <Compile Include="Services\ICheckFileExtentions.cs" />
     <Compile Include="Services\ISolutionAttributeHelper.cs" />
     <Compile Include="Services\ISolutionInfoAttributeFilesProvider.cs" />
     <Compile Include="Services\ISolutionInfoAttributeProvider.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Commands\CreateSolution\SolutionCreatorCommandProvider.cs" />
     <Compile Include="Services\SolutionAttributeHelper.cs" />
     <Compile Include="Services\SolutionInfoAttribute.cs" />
+    <Compile Include="Services\SolutionInfoAttributeFilesProvider.cs" />
     <Compile Include="Services\SolutionInfoAttributeProvider.cs" />
     <Compile Include="Services\SolutionAttributeSearcher.cs" />
     <Compile Include="Services\TemplatePath.cs" />
@@ -146,7 +149,7 @@
     <Compile Include="ViewModels\SolutionInfoViewModel.cs" />
     <Compile Include="ViewModels\SolutionTemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\CreateSolutionApplication.cs" />
+    <Compile Include="Model\CreateSolutionApplication.cs" />
     <Compile Include="Views\ICreateSolutionApplication.cs" />
     <Compile Include="Views\ISolutionInfoWindowFactory.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -162,6 +165,7 @@
       <DependentUpon>SelectSolutionTemplateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ISelectSolutionTemplateWindowFactory.cs" />
+    <Compile Include="Views\SolutionCreatorExceptions.cs" />
     <Compile Include="Views\SolutionInfoView.xaml.cs">
       <DependentUpon>SolutionInfoView.xaml</DependentUpon>
     </Compile>
