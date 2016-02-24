@@ -164,32 +164,9 @@ namespace NCmdLiner.SolutionCreator.Library.Model
 
         private void AddSolutionInfoAttributeToResolverContext(SolutionInfoAttribute solutionAttribute)
         {
-            _resolveContext.AddVariable(solutionAttribute.Name, solutionAttribute.Value);
-
-            //_resolveContext.AddVariable("CompanyName", viewModel.CompanyName);
-            //_resolveContext.AddVariable("NamespaceCompany", viewModel.NamespaceCompanyName);
-            //_resolveContext.AddVariable("ProductName", viewModel.ProductName);
-            //_resolveContext.AddVariable("ShortProductName", viewModel.ShortProductName);
-            //_resolveContext.AddVariable("ProductDescription", viewModel.ProductDescription);
-            //_resolveContext.AddVariable("ConsoleProjectName", viewModel.ConsoleProjectName);
-            //_resolveContext.AddVariable("ConsoleProjectNameU", viewModel.ConsoleProjectName.Replace(".", "_").Replace("__", "_"));
-            //_resolveContext.AddVariable("LibraryProjectName", viewModel.LibraryProjectName);
-            //_resolveContext.AddVariable("LibraryProjectNameU", viewModel.LibraryProjectName.Replace(".", "_").Replace("__", "_"));
-            //_resolveContext.AddVariable("TestsProjectName", viewModel.TestsProjectName);
-            //_resolveContext.AddVariable("TestsProjectNameU", viewModel.TestsProjectName.Replace(".", "_").Replace("__", "_"));
-            //_resolveContext.AddVariable("SetupProjectName", viewModel.SetupProjectName);
-            //_resolveContext.AddVariable("SetupProjectNameU", viewModel.SetupProjectName.Replace(".", "_").Replace("__", "_"));
-            //_resolveContext.AddVariable("ScriptInstallProjectName", viewModel.ScriptInstallProjectName);
-            //_resolveContext.AddVariable("ScriptInstallProjectNameU", viewModel.ScriptInstallProjectName.Replace(" ", "_").Replace(".", "_").Replace("__", "_"));
-            //_resolveContext.AddVariable("Year", DateTime.Now.Year.ToString(CultureInfo.InvariantCulture));
-            //_resolveContext.AddVariable("RootNamespace", viewModel.NamespaceCompanyName + "." + viewModel.ProductName);
-            //_resolveContext.AddVariable("Authors", viewModel.Authors);
-
-
+            _resolveContext.AddVariable(solutionAttribute.Name, solutionAttribute.Value);            
         }
-
         
-
         public void InitializeAndRun(string targetRootFolder)
         {
             if (targetRootFolder == null) throw new ArgumentNullException(nameof(targetRootFolder));
