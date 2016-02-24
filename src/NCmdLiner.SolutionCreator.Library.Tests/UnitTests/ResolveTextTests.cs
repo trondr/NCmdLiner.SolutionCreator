@@ -17,9 +17,9 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.UnitTests
         {
             _logger = new ConsoleOutLogger(this.GetType().Name, LogLevel.All, true, false, false, "yyyy-MM-dd hh:mm:ss");
             _stubResolveContext = MockRepository.GenerateStub<IResolveContext>();            
-            _stubResolveContext.Stub(context => context.GetVariable("ConsoleProjectName")).Return("My.Football.Manager");
-            _stubResolveContext.Stub(context => context.GetVariable("LibraryProjectName")).Return("My.Football.Manager.Library");
-            _stubResolveContext.Stub(context => context.GetVariable("ProjectDescription")).Return("application for management of football teams.");
+            _stubResolveContext.Stub(context => context.GetVariable("_S_ConsoleProjectName_S_")).Return("My.Football.Manager");
+            _stubResolveContext.Stub(context => context.GetVariable("_S_LibraryProjectName_S_")).Return("My.Football.Manager.Library");
+            _stubResolveContext.Stub(context => context.GetVariable("_S_ProjectDescription_S_")).Return("application for management of football teams.");
             _stubResolveContext.Stub(context => context.GetVariable("ECD7A685-EDCC-474C-AD38-000000000001")).Return("E1685BCA-21CE-4D7F-B030-90CC78502E76");
             _stubResolveContext.Stub(context => context.GetVariable("ECD7A685-EDCC-474C-AD38-000000000002")).Return("752D06E5-5B1F-4FC0-9AFE-E81ED61818F7");
         }
