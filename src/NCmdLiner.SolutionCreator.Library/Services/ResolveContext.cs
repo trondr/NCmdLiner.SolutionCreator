@@ -16,6 +16,8 @@ namespace NCmdLiner.SolutionCreator.Library.Services
         {
             _guidGeneator = guidGeneator;
             _logger = logger;
+            var pattern = string.Format(@"([\.\-;,\s]+)");
+            _regEx = new Regex(pattern, RegexOptions.IgnorePatternWhitespace);
         }
 
         public void AddVariable(string name, string value)
@@ -36,6 +38,16 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             {
                 return Variables[name];
             }
+            //All variables ending with U_S_ will be looked up by the corresponding 
+            //variable without U_S_ ending. Example: _S_SomeValueU_S_ will be looked up 
+            //using _S_SomeValue_S_ and the value will have all white spaces and special
+            //characters replaced by underscore.
+            var underscoredValue = GetUnderscoredValue(name);
+            if(underscoredValue != null)
+            {
+                return  underscoredValue;
+            }
+            
             //All context variable names on format GuidN will return a guid, one unique guid for each index N
             if (GuidRegex.IsMatch(name) || SpecialGuidRegex.IsMatch(name))
             {
@@ -46,6 +58,19 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             return null;
         }
 
+        private string GetUnderscoredValue(string name)
+        {
+            if(name.EndsWith("U_S_"))
+            {
+                var nameWithOutU = name.Replace("U_S_","_S_");
+                if (Variables.ContainsKey(nameWithOutU))
+                {
+                    return _regEx.Replace(Variables[nameWithOutU], "_");
+                }
+            }
+            return  null;
+        }
+        
         private IDictionary<string, string> Variables
         {
             get { return _variables ?? (_variables = new Dictionary<string, string>()); }
@@ -69,5 +94,6 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             }
         }
         private Regex _specialGuidRegex;
+        private Regex _regEx;
     }
 }
