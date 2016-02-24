@@ -12,7 +12,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             _solutionAttributeHelper = solutionAttributeHelper;
         }
 
-        readonly Regex _attributeNameRegex = new Regex("(_S_.+?_S_)",RegexOptions.Compiled|RegexOptions.IgnoreCase);
+        readonly Regex _attributeNameRegex = new Regex("(_S_.+?[^U]_S_)",RegexOptions.Compiled|RegexOptions.IgnoreCase);
         
         public IEnumerable<SolutionInfoAttribute> FindSolutionAttributesFromString(string text)
         {

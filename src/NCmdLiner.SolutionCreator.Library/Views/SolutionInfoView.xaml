@@ -9,16 +9,15 @@
              mc:Ignorable="d" d:DesignWidth="500" Height="500" >
 
     <DockPanel d:DataContext="{d:DesignInstance Type=viewModels:DesignTimeSolutionInfoViewModel, IsDesignTimeCreatable=True}" Margin="5" >
-    <DockPanel Dock="Top">
-        <Label Content="{Binding SolutionInfoLabel}" VerticalAlignment="Top"/>
-    </DockPanel>
-    <DockPanel DockPanel.Dock="Bottom">
-        <Button Content="OK" Command="{Binding OkCommand}" HorizontalAlignment="Right" Margin="2"/>
-        <Label Content="{Binding ApplicationInfo}" Foreground="DarkGray" HorizontalAlignment="Center"  Margin="2"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"  Margin="2"/>
-    </DockPanel>
-
-        <DockPanel>
+        <DockPanel Dock="Top">
+            <Label Content="{Binding SolutionInfoLabel}" VerticalAlignment="Top"/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Content="OK" Command="{Binding OkCommand}" HorizontalAlignment="Right" Margin="2"/>
+            <Label Content="{Binding ApplicationInfo}" Foreground="DarkGray" HorizontalAlignment="Center"  Margin="2"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"  Margin="2"/>
+        </DockPanel>
+        <DockPanel HorizontalAlignment="Stretch">
             <ListView DataContext="{Binding SolutionInfoAttributes}" ItemsSource="{Binding}" SelectionMode="Single" HorizontalAlignment="Stretch">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
