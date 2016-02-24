@@ -12,7 +12,7 @@ namespace NCmdLiner.SolutionCreator.Library.Services
                 DisplayName = GetDisplayNameFromAttributeName(solutionInfoAttributeName)
             };
         }
-
+        
         private string GetDisplayNameFromAttributeName(string solutionInfoAttributeName)
         {
             var attributeNameBase = solutionInfoAttributeName.Replace("_S_","");

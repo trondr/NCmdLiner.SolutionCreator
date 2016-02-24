@@ -37,19 +37,14 @@ namespace NCmdLiner.SolutionCreator.Library.Services
                     yield return solutionInfoAttribute;
                 }
             }
-
-
+            
             //Get all files in template folder, search through each file for attributes on the format '_S_.+?_S_' . Example: _S_ConsoleProjectName_S_
             foreach (var file in _solutionInfoAttributeFilesProvider.GetFiles(solutionTemplateFolder))
             {
                 var solutionInfoAttributes = GetUniqueSolutionInfoAttributesFromFile(file, uniqueSolutionInfoAttributes);
                 foreach (var solutionInfoAttribute in solutionInfoAttributes)
                 {
-                    if (!uniqueSolutionInfoAttributes.ContainsKey(solutionInfoAttribute))
-                    {
-                        uniqueSolutionInfoAttributes.Add(solutionInfoAttribute, null);
-                        yield return solutionInfoAttribute;
-                    }
+                    yield return solutionInfoAttribute;
                 }
             }
         }
@@ -60,7 +55,11 @@ namespace NCmdLiner.SolutionCreator.Library.Services
             {
                 var solutionAttribute = _solutionAttributeHelper.GetSolutionInfoAttributeFromAttributeName(solutionAttributeKey);
                 solutionAttribute.Value = _iniFileOperation.Read(solutionAttributesIni,"SolutionAttributes",solutionAttributeKey);
-                yield return  solutionAttribute;
+                if (!uniqueSolutionInfoAttributes.ContainsKey(solutionAttribute))
+                {
+                    uniqueSolutionInfoAttributes.Add(solutionAttribute, null);
+                    yield return solutionAttribute;
+                }                
             }
         }
 
@@ -81,6 +80,6 @@ namespace NCmdLiner.SolutionCreator.Library.Services
                     }
                 }
             }
-        }
+        }        
     }
 }
