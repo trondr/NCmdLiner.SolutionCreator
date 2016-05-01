@@ -20,9 +20,9 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             SolutionInfoAttributes = new ObservableCollection<SolutionInfoAttributeViewModel>();
             SolutionInfoAttributes.CollectionChanged += SolutionInfoAttributes_CollectionChanged; ;
             ApplicationInfo = solutionCreatorApplicationInfo.Name + " " + solutionCreatorApplicationInfo.Version;
-            SolutionInfoLabel = "Solution Attributes:";
             OkCommand = new AsyncCommand(Ok, () => !IsBusy && AllAttributesAreFilledOut);
             CancelCommand = new AsyncCommand(Cancel, () => !IsBusy);
+            EnableMultiEdit = true;
         }
 
         private Task Ok()
@@ -75,16 +75,6 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             }
         }
 
-        public static readonly DependencyProperty SolutionInfoLabelProperty = DependencyProperty.Register(
-            "SolutionInfoLabel", typeof(string), typeof(SolutionInfoViewModel), new PropertyMetadata(default(string)));
-
-        public string SolutionInfoLabel
-        {
-            get { return (string)GetValue(SolutionInfoLabelProperty); }
-            set { SetValue(SolutionInfoLabelProperty, value); }
-        }
-
-
         public ObservableCollection<SolutionInfoAttributeViewModel> SolutionInfoAttributes { get; set; }
 
         public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
@@ -115,6 +105,25 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
             {
                 return SolutionInfoAttributes.All(model => model.IsFilledOut);
             }
+        }
+
+        public static readonly DependencyProperty EnableMultiEditProperty = DependencyProperty.Register(
+            "EnableMultiEdit", typeof(bool), typeof(SolutionInfoViewModel), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure, EnableMultiEditPropertyChangedCallback));
+
+        private static void EnableMultiEditPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var viewModel = d as SolutionInfoViewModel;
+            if (viewModel != null)
+                foreach (var solutionInfoAttributeViewModel in viewModel.SolutionInfoAttributes)
+                {
+                    solutionInfoAttributeViewModel.UpdateOtherSolutionAttributes = (bool)e.NewValue;
+                }
+        }
+
+        public bool EnableMultiEdit
+        {
+            get { return (bool)GetValue(EnableMultiEditProperty); }
+            set { SetValue(EnableMultiEditProperty, value); }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace NCmdLiner.SolutionCreator.Library.Views
                 }
                 this.Close();
             };
-            this.View.ViewModel.UpdateView = new Action(() => {this.View._solutionInfoAttributesGridView.ResetColumnWidts();});
+            this.View.ViewModel.UpdateView = new Action(() => {ResetColumnWidthsGridView.ResetColumnWidts(this.View._solutionInfoAttributesGridView);});
             this.View.HorizontalAlignment = HorizontalAlignment.Stretch;
             this.View.VerticalAlignment = VerticalAlignment.Stretch;            
             if (WindowDockPanel.Children.Count == 0)

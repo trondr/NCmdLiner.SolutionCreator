@@ -39,7 +39,7 @@ namespace NCmdLiner.SolutionCreator.Library.Tests.ManualTests
 
         }
 
-        [Test]
+        [Test, RequiresSTA]
         public void SolutionInfoWindowTestCreate()
         {
             using (var testBooStrapper = new TestBootStrapper(GetType()))

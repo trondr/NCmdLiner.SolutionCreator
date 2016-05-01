@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls;
 using NCmdLiner.SolutionCreator.Library.ViewModels;
 
 namespace NCmdLiner.SolutionCreator.Library.Views
@@ -6,7 +7,7 @@ namespace NCmdLiner.SolutionCreator.Library.Views
     /// <summary>
     /// Interaction logic for SolutionInfoView.xaml
     /// </summary>
-    public partial class SolutionInfoView : ViewBase
+    public partial class SolutionInfoView : UserControl
     {
         public SolutionInfoViewModel ViewModel {get; set; }
 

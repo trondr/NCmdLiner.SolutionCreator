@@ -6,8 +6,6 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
 {
     public interface ISolutionInfoViewModel
     {
-        string SolutionInfoLabel { get; set; }
-
         ObservableCollection<SolutionInfoAttributeViewModel> SolutionInfoAttributes { get;set;}
         
         bool IsBusy {get;set; }
@@ -23,5 +21,7 @@ namespace NCmdLiner.SolutionCreator.Library.ViewModels
         string ApplicationInfo {get;set; }
 
         bool AllAttributesAreFilledOut { get; }
+
+        bool EnableMultiEdit {get;set; }
     }
 }

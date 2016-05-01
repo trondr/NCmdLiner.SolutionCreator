@@ -152,6 +152,7 @@
     <Compile Include="Model\CreateSolutionApplication.cs" />
     <Compile Include="Views\ICreateSolutionApplication.cs" />
     <Compile Include="Views\ISolutionInfoWindowFactory.cs" />
+    <Compile Include="Views\LocalizedStrings.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -168,6 +169,11 @@
     <Compile Include="Views\SolutionCreatorExceptions.cs" />
     <Compile Include="Views\SolutionInfoView.xaml.cs">
       <DependentUpon>SolutionInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResourcesStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\SolutionInfoWindow.xaml.cs">
       <DependentUpon>SolutionInfoWindow.xaml</DependentUpon>
@@ -206,6 +212,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ResourcesStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SolutionInfoView\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
