@@ -75,7 +75,6 @@
     <Compile Include="BootStrap\SolutionInfoAttributeTypeMapperConfiguration.cs" />
     <Compile Include="BootStrap\SolutionTemplateTypeMapperConfiguration.cs" />
     <Compile Include="BootStrap\TypeMapper.cs" />
-    <Compile Include="Commands\CreateSolution\IClientServiceApplicationSolutionCreator.cs" />
     <Compile Include="Commands\CreateSolution\ISolutionCreatorCommandProvider.cs" />
     <Compile Include="Common\CommandProvider.cs" />
     <Compile Include="Common\EventsHelper.cs" />
