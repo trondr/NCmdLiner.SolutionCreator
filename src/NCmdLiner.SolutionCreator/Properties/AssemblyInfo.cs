@@ -18,10 +18,10 @@ using System.Runtime.InteropServices;
     "or user defined template solution.")]
 [assembly: AssemblyCompany("github.com.trondr")]
 [assembly: AssemblyProduct("NCmdLiner.SolutionCreator")]
-[assembly: AssemblyCopyright("Copyright © <github.com.trondr> 2016")]
+[assembly: AssemblyCopyright("Copyright © <github.com.trondr> 2017")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyInformationalVersion("1.0.16311.")]
-[assembly: AssemblyVersion("1.0.16311.51")]
-[assembly: AssemblyFileVersion("1.0.16311.51")]
+[assembly: AssemblyInformationalVersion("1.0.17053.")]
+[assembly: AssemblyVersion("1.0.17053.52")]
+[assembly: AssemblyFileVersion("1.0.17053.52")]
 
 
