@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Windows.Documents;
-using System.Windows.Media.Media3D;
 using Common.Logging;
-using NCmdLiner.SolutionCreator.Library.Common;
 
 namespace NCmdLiner.SolutionCreator.Library.Services
 {
@@ -37,6 +33,8 @@ namespace NCmdLiner.SolutionCreator.Library.Services
 
             foreach (var sourceFile in sourceFiles)
             {
+                if (sourceFile.Name == ".git" || sourceFile.Name == ".gitignore") continue;
+
                 var targetFile = new FileInfo(_textResolver.Resolve(sourceFile.FullName.Replace(sourceFolder, targetFolder)));
                 _fileResolver.Resolve(sourceFile.FullName, targetFile.FullName);
             }
