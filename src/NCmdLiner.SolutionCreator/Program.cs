@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.Logging;
-using NCmdLiner.Exceptions;
 using NCmdLiner.SolutionCreator.BootStrap;
 using NCmdLiner.SolutionCreator.Library.Common;
 
@@ -22,12 +21,13 @@ namespace NCmdLiner.SolutionCreator
                     // ReSharper disable once CoVariantArrayConversion
                     object[] commandTargets = BootStrapper.Container.ResolveAll<CommandDefinition>();
                     logger.InfoFormat("Start: {0} ({1}). Command line: {2}", applicationInfo.Name, applicationInfo.Version, Environment.CommandLine);
-                    return CmdLinery.Run(commandTargets, args, applicationInfo, new NotepadMessenger());
-                }
-                catch (MissingCommandException ex)
-                {
-                    logger.ErrorFormat("Missing command. {0}", ex.Message);
-                    returnValue = 1;
+                    CmdLinery.RunEx(commandTargets, args, applicationInfo, new NotepadMessenger())
+                        .OnFailure(exception =>
+                        {
+                            returnValue = 1;
+                            logger.Error(exception.Message);
+                        })
+                        .OnSuccess(i => returnValue = i);
                 }
                 catch (Exception ex)
                 {
@@ -38,20 +38,20 @@ namespace NCmdLiner.SolutionCreator
                 {
                     logger.InfoFormat("Stop: {0} ({1}). Return value: {2}", applicationInfo.Name, applicationInfo.Version, returnValue);
 #if DEBUG
-                    Console.WriteLine("Press ENTER...");
+                    Console.WriteLine(@"Press ENTER...");
                     Console.ReadLine();
 #endif
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Fatal error when wiring up the application.{0}{1}", Environment.NewLine, ex);
+                Console.WriteLine($@"Fatal error when wiring up the application.{Environment.NewLine}{ex}");
                 returnValue = 3;
             }
             finally
             {                
 #if DEBUG
-                Console.WriteLine("Press ENTER again...");
+                Console.WriteLine(@"Press ENTER again...");
                 Console.ReadLine();
 #endif
             }

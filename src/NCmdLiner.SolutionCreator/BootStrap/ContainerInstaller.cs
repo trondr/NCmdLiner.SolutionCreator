@@ -9,6 +9,7 @@ using Castle.Windsor;
 using Common.Logging;
 using Common.Logging.Simple;
 using NCmdLiner.SolutionCreator.Library.BootStrap;
+using NCmdLiner.SolutionCreator.Library.Commands.CreateSolution;
 using NCmdLiner.SolutionCreator.Library.Common;
 using NCmdLiner.SolutionCreator.Library.Services;
 using NCmdLiner.SolutionCreator.Library.ViewModels;
@@ -36,6 +37,13 @@ namespace NCmdLiner.SolutionCreator.BootStrap
             container.Kernel.Register(Component.For<ILog>().Instance(LogManager.GetLogger(applicationRootNameSpace))); //Default logger
             container.Kernel.Resolver.AddSubResolver(new LoggerSubDependencyResolver()); //Enable injection of class specific loggers
 
+            container.Register(Component.For<ISolutionCreatorCommandProviderFactory>().AsFactory());
+            container.Register(
+                Component.For<ISolutionCreatorCommandProvider>()
+                    .ImplementedBy<SolutionCreatorCommandProvider>()
+                    .Named(typeof(SolutionCreatorCommandProvider).Name)
+                    .LifeStyle.Transient);
+            
             //Manual registrations
             container.Register(Component.For<MainWindow>().Activator<StrictComponentActivator>());
             container.Register(Component.For<MainView>().Activator<StrictComponentActivator>());
